@@ -28,6 +28,7 @@ python -m src.daemon /path/to/your/project
 - **🧠 Deep Path Analysis** - AI-powered commit review against project charter
 - **👁️ Screen Analysis** - Proactive coding suggestions from screen capture
 - **🔮 Oracle** - AI prompt engineering for optimal developer assistance
+- **📝 SGR Logging** - All Gemini API calls are logged to demonstrate Structured Generation Reasoning
 
 ## API Endpoints
 
@@ -87,6 +88,28 @@ package-lock.json
 ```
 
 Files matching these patterns will be excluded during project context initialization.
+
+### Gemini API Logs (SGR Demo)
+
+All Gemini API interactions are logged to `.vibe-assist/gemini-logs.jsonl` to demonstrate **Structured Generation Reasoning (SGR)** in action.
+
+**View logs:**
+```bash
+# View all API calls
+python view_gemini_logs.py /path/to/your/project
+
+# View only the latest call
+python view_gemini_logs.py --latest /path/to/your/project
+```
+
+Each log entry shows:
+- Function that made the call
+- Model used (gemini-2.5-flash or gemini-2.5-pro)
+- Pydantic schema used for structured output
+- Full prompt sent to AI
+- Full response received
+
+This demonstrates how the system uses SGR to enforce structured outputs for predictable AI behavior.
 
 ## Development
 

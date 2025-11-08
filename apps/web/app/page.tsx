@@ -1,102 +1,125 @@
-import Image, { type ImageProps } from "next/image";
-import { Button } from "@repo/ui/button";
+"use client";
+
+import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 
-type Props = Omit<ImageProps, "src"> & {
-  srcLight: string;
-  srcDark: string;
-};
+interface ChecklistItem {
+  id: string;
+  title: string;
+  completed: boolean;
+}
 
-const ThemeImage = (props: Props) => {
-  const { srcLight, srcDark, ...rest } = props;
-
-  return (
-    <>
-      <Image {...rest} src={srcLight} className="imgLight" />
-      <Image {...rest} src={srcDark} className="imgDark" />
-    </>
-  );
-};
+interface ChecklistResponse {
+  items: ChecklistItem[];
+  lastUpdated: string;
+}
 
 export default function Home() {
+  const [data, setData] = useState<ChecklistResponse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchData = async () => {
+    try {
+      setError(null);
+      const response = await fetch("/api/checklist");
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch checklist data");
+      }
+
+      const result: ChecklistResponse = await response.json();
+      setData(result);
+      setLoading(false);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Unknown error");
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    // Initial fetch
+    fetchData();
+
+    // Set up real-time polling every 5 seconds
+    const interval = setInterval(fetchData, 5000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className={styles.page}>
+        <main className={styles.main}>
+          <div className={styles.header}>
+            <h1 className={styles.title}>Vibe Assist</h1>
+            <p className={styles.subtitle}>Real-time Code Security Monitor</p>
+          </div>
+          <div className={styles.loader}>Loading...</div>
+        </main>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={styles.page}>
+        <main className={styles.main}>
+          <div className={styles.header}>
+            <h1 className={styles.title}>Vibe Assist</h1>
+            <p className={styles.subtitle}>Real-time Code Security Monitor</p>
+          </div>
+          <div className={styles.error}>
+            <h2>Error</h2>
+            <p>{error}</p>
+          </div>
+        </main>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <ThemeImage
-          className={styles.logo}
-          srcLight="turborepo-dark.svg"
-          srcDark="turborepo-light.svg"
-          alt="Turborepo logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol>
-          <li>
-            Get started by editing <code>apps/web/app/page.tsx</code>
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className={styles.ctas}>
-          <a
-            className={styles.primary}
-            href="https://vercel.com/new/clone?demo-description=Learn+to+implement+a+monorepo+with+a+two+Next.js+sites+that+has+installed+three+local+packages.&demo-image=%2F%2Fimages.ctfassets.net%2Fe5382hct74si%2F4K8ZISWAzJ8X1504ca0zmC%2F0b21a1c6246add355e55816278ef54bc%2FBasic.png&demo-title=Monorepo+with+Turborepo&demo-url=https%3A%2F%2Fexamples-basic-web.vercel.sh%2F&from=templates&project-name=Monorepo+with+Turborepo&repository-name=monorepo-turborepo&repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fturborepo%2Ftree%2Fmain%2Fexamples%2Fbasic&root-directory=apps%2Fdocs&skippable-integrations=1&teamSlug=vercel&utm_source=create-turbo"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className={styles.logo}
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            href="https://turborepo.com/docs?utm_source"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.secondary}
-          >
-            Read our docs
-          </a>
+        <div className={styles.header}>
+          <h1 className={styles.title}>Vibe Assist</h1>
+          <p className={styles.subtitle}>Real-time Code Security Monitor</p>
         </div>
-        <Button appName="web" className={styles.secondary}>
-          Open alert
-        </Button>
+
+        <div className={styles.dashboard}>
+          <div className={styles.statusCard}>
+            <div className={styles.statusHeader}>
+              <h2>System Status</h2>
+              <span className={styles.lastUpdated}>
+                Last updated: {data ? new Date(data.lastUpdated).toLocaleTimeString() : "N/A"}
+              </span>
+            </div>
+
+            <div className={styles.checklist}>
+              {data?.items.map((item) => (
+                <div
+                  key={item.id}
+                  className={`${styles.checklistItem} ${item.completed ? styles.completed : styles.pending}`}
+                >
+                  <div className={styles.checkmark}>
+                    {item.completed ? "✓" : "○"}
+                  </div>
+                  <div className={styles.itemContent}>
+                    <span className={styles.itemTitle}>{item.title}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className={styles.footer}>
+            <div className={styles.autoRefresh}>
+              <div className={styles.pulse}></div>
+              <span>Auto-refreshing every 5 seconds</span>
+            </div>
+          </div>
+        </div>
       </main>
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com/templates?search=turborepo&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          href="https://turborepo.com?utm_source=create-turbo"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to turborepo.com →
-        </a>
-      </footer>
     </div>
   );
 }

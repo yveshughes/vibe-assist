@@ -247,8 +247,13 @@ def main():
     VIBE_ASSIST_DIR = Path(project_path) / ".vibe-assist"
     STATE_FILE_PATH = VIBE_ASSIST_DIR / "state.json"
     CONTEXT_FILE_PATH = VIBE_ASSIST_DIR / "context.vibe"
+    GEMINI_LOG_FILE = VIBE_ASSIST_DIR / "gemini-logs.jsonl"
 
     VIBE_ASSIST_DIR.mkdir(exist_ok=True)
+
+    # Initialize Gemini logging
+    analysis.GEMINI_LOG_FILE = str(GEMINI_LOG_FILE)
+    print(f"📝 Gemini API calls will be logged to: {GEMINI_LOG_FILE}")
 
     if STATE_FILE_PATH.exists():
         print(f"✅ Found existing state file: {STATE_FILE_PATH}")

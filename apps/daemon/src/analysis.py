@@ -5,6 +5,7 @@ import json
 import fnmatch
 from pathlib import Path
 from typing import List, Dict, Set
+from datetime import datetime
 from pydantic import BaseModel
 from google import genai
 from google.genai import types
@@ -13,6 +14,9 @@ from git import Repo, exc
 # Initialize Gemini client
 # Make sure to set your GEMINI_API_KEY environment variable
 client = None
+
+# Global log file path (set during initialization)
+GEMINI_LOG_FILE = None
 
 # Pydantic models for JSON schema validation
 class APIEndpoint(BaseModel):
@@ -94,6 +98,35 @@ def initialize_client():
     except Exception as e:
         print(f"Error initializing Gemini client: {e}")
         return False
+
+def _log_gemini_call(function_name: str, model: str, prompt: str, response_text: str, schema_used: str = None):
+    """
+    Log Gemini API calls to demonstrate SGR (Structured Generation Reasoning).
+
+    Logs are saved to .vibe-assist/gemini-logs.jsonl in JSON Lines format.
+    Each line is a complete JSON object representing one API call.
+    """
+    if not GEMINI_LOG_FILE:
+        return
+
+    try:
+        log_entry = {
+            "timestamp": datetime.now().isoformat(),
+            "function": function_name,
+            "model": model,
+            "prompt": prompt[:2000] if len(prompt) > 2000 else prompt,  # Truncate long prompts
+            "response": response_text[:2000] if len(response_text) > 2000 else response_text,  # Truncate long responses
+            "schema": schema_used,
+            "prompt_length": len(prompt),
+            "response_length": len(response_text)
+        }
+
+        # Append to JSONL file (one JSON object per line)
+        with open(GEMINI_LOG_FILE, 'a') as f:
+            f.write(json.dumps(log_entry) + '\n')
+
+    except Exception as e:
+        print(f"⚠️  Error logging Gemini call: {e}")
 
 def _load_ignore_patterns(project_path: str) -> Set[str]:
     """
@@ -214,6 +247,15 @@ def analyze_fast_path(diff, state, lock):
                 'response_mime_type': 'application/json',
                 'response_json_schema': SecurityIssue.model_json_schema(),
             },
+        )
+
+        # Log the API call
+        _log_gemini_call(
+            function_name="analyze_fast_path",
+            model="gemini-2.5-flash",
+            prompt=prompt,
+            response_text=response.text if response.text else "",
+            schema_used="SecurityIssue"
         )
 
         # Parse response using Pydantic
@@ -397,6 +439,15 @@ def _check_charter_alignment(commit, diff_content, charter_items):
             },
         )
 
+        # Log the API call
+        _log_gemini_call(
+            function_name="_check_charter_alignment",
+            model="gemini-2.5-flash",
+            prompt=alignment_prompt,
+            response_text=response.text if response.text else "",
+            schema_used="CharterAlignmentCheck"
+        )
+
         if response.text:
             return CharterAlignmentCheck.model_validate_json(response.text)
         return None
@@ -487,6 +538,15 @@ def analyze_deep_path(commit, state, lock, state_file_path, context_file_path):
                 'response_mime_type': 'application/json',
                 'response_json_schema': ProjectCharter.model_json_schema(),
             },
+        )
+
+        # Log the API call
+        _log_gemini_call(
+            function_name="analyze_deep_path",
+            model="gemini-2.5-pro",
+            prompt=prompt,
+            response_text=response.text if response.text else "",
+            schema_used="ProjectCharter"
         )
 
         print("✅ Commit analysis complete")
@@ -685,6 +745,15 @@ def initialize_project_context_full(project_path, state, lock, state_file_path, 
             },
         )
 
+        # Log the API call
+        _log_gemini_call(
+            function_name="initialize_project_context_full",
+            model="gemini-2.5-pro",
+            prompt=analysis_prompt,
+            response_text=response.text if response.text else "",
+            schema_used="ProjectCharter"
+        )
+
         if not response.text:
             print("❌ CRITICAL: Empty response from API during initialization.")
             return
@@ -841,6 +910,15 @@ def triage_suggestions(new_suggestion, existing_issues, state, lock):
             },
         )
 
+        # Log the API call
+        _log_gemini_call(
+            function_name="triage_suggestions",
+            model="gemini-2.5-flash",
+            prompt=triage_prompt,
+            response_text=response.text if response.text else "",
+            schema_used="SuggestionTriage"
+        )
+
         if response.text:
             triage_result = SuggestionTriage.model_validate_json(response.text)
 
@@ -991,6 +1069,15 @@ If the screenshot shows normal development (code editing, git status, IDE hints)
             },
         )
 
+        # Log the API call (without image bytes)
+        _log_gemini_call(
+            function_name="analyze_screen_proactively",
+            model="gemini-2.5-flash",
+            prompt=prompt,
+            response_text=response.text if response.text else "",
+            schema_used="ProactiveSuggestion"
+        )
+
         # Parse response
         if not response.text:
             print("⚠️  Empty response from API")
@@ -1090,6 +1177,15 @@ def generate_oracle_prompt(goal, image_bytes, context):
                 'response_mime_type': 'application/json',
                 'response_json_schema': OraclePrompt.model_json_schema(),
             },
+        )
+
+        # Log the API call (without image bytes)
+        _log_gemini_call(
+            function_name="generate_oracle_prompt",
+            model="gemini-2.5-pro",
+            prompt=prompt_engineering_prompt,
+            response_text=response.text if response.text else "",
+            schema_used="OraclePrompt"
         )
 
         if not response.text:
