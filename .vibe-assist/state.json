@@ -2,88 +2,16 @@
   "security_score": 100,
   "active_issues": [
     {
-      "type": "Proactive - refactoring",
-      "description": "The IDE shows a lightbulb suggestion icon next to the 'ProjectCharter' class definition, indicating a potential refactoring or code improvement opportunity.",
-      "severity": "Low",
-      "priority_score": 3
-    },
-    {
       "type": "Proactive - error",
-      "description": "The terminal reports a \"[High] P5 - Proactive - error\" requiring immediate attention, indicating a critical issue in the current state summary.",
+      "description": "Critical import errors for standard libraries (io, json) and PIL.Image indicate a broken Python environment, blocking application execution.",
       "severity": "High",
-      "priority_score": 3
-    },
-    {
-      "type": "Proactive - improvement",
-      "description": "The IDE shows a lightbulb suggestion icon next to the 'CharterItem' class definition, indicating a potential code improvement or refactoring opportunity.",
-      "severity": "Low",
-      "priority_score": 3
-    },
-    {
-      "type": "Proactive - improvement",
-      "description": "The code editor highlights line 4 of 'context.vibe' with a red underline, suggesting a potential stylistic or descriptive improvement.",
-      "severity": "Low",
-      "priority_score": 3
-    },
-    {
-      "type": "Proactive - bug",
-      "description": "Code editor highlights 'In-Memory State Management with Thread Lock' on line 69 of 'context.vibe', indicating a potential design flaw or concurrency bug related to global state management. This needs review.",
-      "severity": "High",
-      "priority_score": 3
-    },
-    {
-      "type": "Proactive - improvement",
-      "description": "The terminal suggests adding a '.vibe-assist.ignore' file to enable the exclusion of specific files or patterns from analysis by the vibe-assist tool.",
-      "severity": "Medium",
-      "priority_score": 3
-    },
-    {
-      "type": "Proactive - error",
-      "description": "The terminal reports 'x Auto-update failed' and suggests running 'claude doctor' or 'npm install'.",
-      "severity": "High",
-      "priority_score": 3
-    },
-    {
-      "type": "Proactive - improvement",
-      "description": "The code editor highlights descriptions for 'rc/analysis.py' and '/daemon/src/analysis.py' on lines 52-53 of 'context.vibe' with a yellow underline, suggesting a potential code quality improvement or refactoring.",
-      "severity": "Low",
-      "priority_score": 3
-    },
-    {
-      "type": "Proactive - improvement",
-      "description": "The IDE shows a lightbulb suggestion icon next to the 'context.vibe' file in the Source Control panel, indicating potential improvements or refactoring suggestions.",
-      "severity": "Low",
-      "priority_score": 3
-    },
-    {
-      "type": "Proactive - improvement",
-      "description": "The file 'SGR.md' is untracked ('U' status) in the file explorer, suggesting it needs to be staged and committed to version control.",
-      "severity": "Low",
-      "priority_score": 3
-    },
-    {
-      "type": "Proactive - improvement",
-      "description": "Multiple project configuration files (e.g., package.json, meta.json) show '!' icons in the file explorer, indicating unstaged changes that should be reviewed and committed.",
-      "severity": "Medium",
-      "priority_score": 3
-    },
-    {
-      "type": "Proactive - improvement",
-      "description": "The IDE status bar shows a warning for 'README.md' (indicated by '! 1'), likely due to incorrect Markdown syntax in the heading '##Optional: Configure ignore patterns**'.",
-      "severity": "Low",
-      "priority_score": 3
-    },
-    {
-      "type": "Proactive - improvement",
-      "description": "The code editor shows a warning icon (red box with exclamation mark) next to line 571 in 'analysis.py', highlighting a potential issue or bad practice with the error reporting print statement.",
-      "severity": "Medium",
-      "priority_score": 3
+      "priority_score": 4
     }
   ],
   "project_charter": {
     "initialized": true,
     "project_name": "Vibe Assist",
-    "description": "A comprehensive code monitoring and security analysis tool that combines a Python AI backend (Daemon), a Next.js web application/API bridge, and a native macOS widget. It provides real-time security vulnerability detection, AI-powered commit analysis, and proactive coding suggestions by monitoring git repositories and screen activity. The system's proactive screen analysis has been simplified to provide a continuous stream of suggestions without deduplication. The system can also perform a one-time, lightweight analysis of a codebase to generate a baseline project context document, scanning all files except for a set of hardcoded common directories. The native macOS widget component has been simplified, removing decorative UI elements and auxiliary features like the menu bar launcher to focus on core data display.",
+    "description": "A comprehensive code monitoring and security analysis tool that combines a Python AI backend (Daemon), a Next.js web application/API bridge, and a native macOS widget. It provides real-time security vulnerability detection, AI-powered commit analysis, and proactive coding suggestions by monitoring git repositories and screen activity. The system has been simplified by removing the user feedback loop. Proactive screen analysis now provides broader coding assistance (errors, refactoring, improvements) and uses an AI-powered triage system to deduplicate and prioritize suggestions. The system can automatically track and mark charter goals as complete based on commit content. It can also perform a one-time, lightweight analysis of a codebase to generate a baseline project context document.",
     "tech_stack": [
       "Python",
       "FastAPI",
@@ -104,7 +32,7 @@
       "packages/ui": "Shared React components used across the Next.js applications.",
       "packages/eslint-config": "Shared ESLint configurations for the monorepo.",
       "packages/typescript-config": "Shared TypeScript configurations for the monorepo.",
-      ".vibe-assist": "Stores project-specific data generated by the tool, such as the `context.md` file. It no longer uses a dedicated ignore file for configuring analysis scope. This directory should be excluded from version control."
+      ".vibe-assist": "Stores project-specific data generated by the tool, such as the `context.md` file. This directory should be excluded from version control."
     },
     "charter_items": [
       {
@@ -113,12 +41,12 @@
         "completed_by_commit": ""
       },
       {
-        "goal": "Analyze new commits for alignment with the project charter.",
+        "goal": "Analyze new commits to evolve the project charter document and automatically mark relevant goals as complete.",
         "completed": false,
         "completed_by_commit": ""
       },
       {
-        "goal": "Offer proactive coding suggestions by analyzing the developer's screen.",
+        "goal": "Offer proactive, general-purpose coding suggestions (e.g., bugs, refactoring, improvements) by analyzing the developer's screen.",
         "completed": false,
         "completed_by_commit": ""
       },
@@ -148,7 +76,7 @@
         "completed_by_commit": ""
       }
     ],
-    "architecture_overview": "Vibe Assist uses a three-tier architecture. The Python Daemon (`apps/daemon`) acts as the core intelligence, running a multi-threaded FastAPI server for git and screen monitoring. It communicates with the Google Gemini API for analysis. A key feature is the on-demand context initialization via an API endpoint, which has been simplified to scan the entire project excluding a predefined set of common directories, removing the need for a user-configured ignore file. The middle tier, a Next.js application (`apps/web`), provides a web dashboard and an API bridge (`/api/checklist`) for the top tier\u2014the native macOS Widget (`apps/widget`). The overall state management model has been simplified, with the removal of issue management endpoints and the elimination of duplicate-checking for proactive screen analysis, resulting in a more direct 'append-only' stream of AI-generated suggestions.",
+    "architecture_overview": "Vibe Assist uses a three-tier architecture. The Python Daemon (`apps/daemon`) acts as the core intelligence, running a multi-threaded FastAPI server for git and screen monitoring. It communicates with the Google Gemini API for analysis. A key feature is the ability for the daemon to analyze commits and automatically update the completion status of its own charter goals. The system's proactive screen analysis has been broadened to provide general coding suggestions, which are then processed by an AI-powered triage module for deduplication and prioritization before being added to the in-memory state. The user feedback system has been removed to simplify the state management model.",
     "api_endpoints": [
       {
         "path": "/api/checklist",
@@ -195,17 +123,22 @@
       {
         "name": "analyze_deep_path",
         "location": "apps/daemon/src/analysis.py",
-        "purpose": "Performs a simplified analysis of a new git commit to check its alignment with the project charter, but no longer updates the charter itself."
+        "purpose": "Performs analysis of a new git commit to update the project charter document and automatically marks charter goals as complete if the commit satisfies their criteria."
       },
       {
         "name": "analyze_screen_proactively",
         "location": "apps/daemon/src/analysis.py",
-        "purpose": "Analyzes a screenshot of the developer's screen using a simplified AI prompt to identify potential coding improvements. It adds all found suggestions to the active issues list without checking for duplicates."
+        "purpose": "Analyzes a screenshot of the developer's screen to identify potential coding issues, bugs, or improvements. It then sends any findings to the `triage_suggestions` function before adding them to the active issues list."
+      },
+      {
+        "name": "triage_suggestions",
+        "location": "apps/daemon/src/analysis.py",
+        "purpose": "Uses an AI prompt to deduplicate new proactive suggestions against existing issues and assign a priority score (1-5). Acts as a filter to prevent redundant suggestions from being added to the state."
       },
       {
         "name": "initialize_project_context",
         "location": "apps/daemon/src/analysis.py",
-        "purpose": "Performs a one-time, lightweight scan of the codebase to generate an initial project charter and a `context.md` file. It no longer respects a user-defined ignore file, instead using a hardcoded list of common directories to exclude."
+        "purpose": "Performs a one-time, lightweight scan of the codebase using git and file system commands to generate an initial project charter and a `context.md` file."
       },
       {
         "name": "start (watcher)",
@@ -258,22 +191,22 @@
         "from_component": "Analysis Module (Daemon)",
         "to_component": "In-Memory State",
         "interaction_type": "State Mutation",
-        "description": "Analysis functions acquire a thread lock and update the shared `state` dictionary. Proactive screen analysis now appends suggestions directly without performing duplicate checks."
+        "description": "Analysis functions acquire a thread lock and update the shared `state` dictionary. Proactive screen analysis appends triaged and prioritized suggestions. Commit analysis (`analyze_deep_path`) can now update the completion status of `charter_items` in the state."
       }
     ],
     "coding_patterns": [
       "Monorepo with Shared Packages: Uses Turborepo and pnpm workspaces to manage multiple applications and share code (UI components, configs).",
       "Multi-threaded Background Tasks: The Python daemon uses threading to run concurrent, non-blocking tasks for git watching and screen analysis.",
-      "In-Memory State Management with Thread Lock: A global dictionary serves as the single source of truth, with a `threading.Lock` to ensure thread-safe updates. Proactive suggestions are appended directly without deduplication, and state is not persisted to disk.",
+      "In-Memory State Management with Thread Lock: A global dictionary serves as the single source of truth, with a `threading.Lock` to ensure thread-safe updates. The state schema is simplified by the removal of the user feedback system. Proactive suggestions are deduplicated and prioritized by an AI triage function before being added to the state.",
       "API Gateway / Bridge Pattern: The Next.js app acts as a bridge, providing a stable, simplified API for the widget while abstracting the more complex backend daemon.",
       "Simplified AI Interaction without Strict Schemas: Relies on general text or simple JSON responses from the AI model, removing the overhead of strict schema validation frameworks like Pydantic.",
-      "Environment-based Configuration: Configuration is managed through environment variables (`.env` files) for secrets and runtime parameters. File-based configuration (like the previous `.vibe-assist.ignore`) has been removed in favor of hardcoded logic for simplicity.",
+      "Environment-based Configuration: The application relies on `.env` files and environment variables for configuration, such as API keys and server ports.",
       "Graceful Fallback: The Next.js API provides a fallback response when the backend daemon is unavailable, ensuring the widget displays a helpful message instead of failing.",
-      "Separation of Source Code and Generated Artifacts: Generated artifacts like `context.md` are stored in the `.vibe-assist` directory, which is intended to be excluded from version control, separating them from the source code."
+      "Separation of Source Code and Generated Artifacts: Generated files such as `context.md` and state dumps are stored in the `.vibe-assist` directory, which is intended to be excluded from version control."
     ],
     "development_setup": "The project is a monorepo managed by pnpm and Turborepo. To set up, run `pnpm install` in the root. For the Python daemon in `apps/daemon`, create and activate a virtual environment, then run `pip install -r requirements.txt`. An essential `GEMINI_API_KEY` environment variable must be set. It is recommended to add the `.vibe-assist/` directory to the project's `.gitignore` file. Start the system with the Python daemon (`python -m src.daemon /path/to/project`) and the Next.js app (`pnpm dev`). The web app runs on port 3000, the daemon on port 8000. To initialize the project context for the first time, send a POST request to `http://localhost:8000/context/initialize`."
   },
-  "last_analyzed_commit": "5d34ed7067070bb6896d17a3cd3cc697d005f2ae",
+  "last_analyzed_commit": "11efcaf7c4361dd059e2ddfb3be79f4179942829",
   "user_feedback": {
     "dismissed_issues": [
       {
