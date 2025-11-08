@@ -3,7 +3,7 @@ import time
 from git import Repo, exc
 from . import analysis
 
-def start(project_path, state, state_lock):
+def start(project_path, state, state_lock, state_file_path, context_file_path):
     """Thread for watching git diff and file changes."""
     print(f"Git watcher starting for: {project_path}")
 
@@ -55,7 +55,7 @@ def start(project_path, state, state_lock):
             if current_commit_hash != last_commit_hash:
                 print(f"New commit detected: {current_commit_hash[:8]}")
                 commit = repo.commit(current_commit_hash)
-                analysis.analyze_deep_path(commit, state, state_lock)
+                analysis.analyze_deep_path(commit, state, state_lock, state_file_path, context_file_path)
                 last_commit_hash = current_commit_hash
 
         except Exception as e:

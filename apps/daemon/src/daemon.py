@@ -12,14 +12,25 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv()
 
+import json
+from pathlib import Path
+
 # --- 1. State Management ---
 # The in-memory "Project Cortex"
 # A thread lock is ESSENTIAL to prevent race conditions
-state = {"security_score": 100, "active_issues": [], "project_charter": {}}
+state = {
+    "security_score": 100,
+    "active_issues": [],
+    "project_charter": {"initialized": False},
+    "last_analyzed_commit": None
+}
 state_lock = threading.Lock()
 
 # Global project path (set on startup)
 project_path = None
+VIBE_ASSIST_DIR = None
+STATE_FILE_PATH = None
+CONTEXT_FILE_PATH = None
 
 # --- 2. Core Logic Modules (Separate Files) ---
 from . import analysis  # Contains all Gemini calls
@@ -70,17 +81,6 @@ async def health_check():
     print("📡 API: GET /health")
     return {"status": "healthy", "gemini_initialized": analysis.client is not None}
 
-@app.post("/context/initialize")
-async def initialize_context():
-    """Initialize project context for a new project."""
-    print("📡 API: POST /context/initialize")
-
-    if not project_path:
-        return {"error": "No project path available"}
-
-    result = analysis.initialize_project_context(project_path, state, state_lock)
-    return result
-
 def print_state_summary():
     """Print a summary of the current state to console."""
     with state_lock:
@@ -96,15 +96,19 @@ def print_state_summary():
                 print(f"  {i}. [{issue['severity']}] {issue['type']}: {issue['description'][:60]}...")
 
         charter = state.get('project_charter', {})
-        if charter.get('last_analyzed_commit'):
-            print(f"\n📋 Last Analyzed Commit: {charter['last_analyzed_commit'][:8]}")
+        if charter.get('initialized'):
+            commit_hash = state.get('last_analyzed_commit')
+            if commit_hash:
+                print(f"\n📋 Last Analyzed Commit: {commit_hash[:8]}")
+        else:
+            print("\n📋 Project charter not yet initialized.")
 
         print("="*60 + "\n")
 
 # --- 4. Background Threads ---
 def run_watcher_thread(project_path: str):
     """Thread for watching git diff and file changes."""
-    watcher.start(project_path, state, state_lock)
+    watcher.start(project_path, state, state_lock, STATE_FILE_PATH, CONTEXT_FILE_PATH)
 
 def run_screen_thread():
     """Thread for periodic screen analysis."""
@@ -122,7 +126,7 @@ def main():
     """Main entry point for the daemon."""
     import sys
     import os
-    global project_path
+    global project_path, VIBE_ASSIST_DIR, STATE_FILE_PATH, CONTEXT_FILE_PATH, state
 
     if len(sys.argv) < 2:
         print("Usage: python -m daemon /path/to/your/project")
@@ -142,11 +146,37 @@ def main():
     print("Vibe Assist - Starting Daemon")
     print("="*60)
 
+    # --- State and Context Initialization ---
+    VIBE_ASSIST_DIR = Path(project_path) / ".vibe-assist"
+    STATE_FILE_PATH = VIBE_ASSIST_DIR / "state.json"
+    CONTEXT_FILE_PATH = VIBE_ASSIST_DIR / "context.vibe"
+
+    VIBE_ASSIST_DIR.mkdir(exist_ok=True)
+
+    if STATE_FILE_PATH.exists():
+        print(f"✅ Found existing state file: {STATE_FILE_PATH}")
+        with open(STATE_FILE_PATH, 'r') as f:
+            loaded_state = json.load(f)
+            # Update in-memory state with loaded data
+            state.update(loaded_state)
+    else:
+        print("ℹ️  No state file found. Project will be initialized.")
+
     # Initialize Gemini client
     print("\nInitializing Gemini API client...")
     if not analysis.initialize_client():
         print("\nWARNING: Running without AI features.")
         print("Set GEMINI_API_KEY to enable AI analysis.")
+    
+    # Check if charter is initialized, if not, run the full analysis
+    if not state.get("project_charter", {}).get("initialized"):
+        print("\n🚀 Project charter not initialized. Performing first-time full codebase analysis...")
+        analysis.initialize_project_context_full(
+            project_path, state, state_lock, STATE_FILE_PATH, CONTEXT_FILE_PATH
+        )
+    else:
+        print("\n✅ Project charter is already initialized.")
+
 
     print(f"\nMonitoring project: {project_path}")
 
@@ -186,7 +216,6 @@ def main():
     print(f"\nStarting API server on http://{host}:{port}")
     print(f"  - State endpoint: http://localhost:{port}/state")
     print(f"  - Oracle endpoint: http://localhost:{port}/oracle/generate_prompt")
-    print(f"  - Context init: http://localhost:{port}/context/initialize")
     print(f"  - Health check: http://localhost:{port}/health")
     print(f"  - Docs: http://localhost:{port}/docs")
     print(f"\n📸 Screenshots saved to: /tmp/vibe-assist-screenshots")
