@@ -39,7 +39,9 @@ The daemon runs a FastAPI server on port 8000:
 
 ## Configuration
 
-Environment variables (optional, see `.env.example`):
+### Environment Variables
+
+Optional environment variables (see `.env.example`):
 
 ```bash
 GEMINI_API_KEY=your-key-here  # Required
@@ -49,6 +51,42 @@ GIT_WATCH_INTERVAL=2           # Default: 2 seconds
 SCREEN_WATCH_INTERVAL=10       # Default: 10 seconds
 STATE_SUMMARY_INTERVAL=60      # Default: 60 seconds
 ```
+
+### Ignore File
+
+Create a `.vibe-assist.ignore` file in your project root to exclude files from analysis:
+
+```bash
+# Copy the example file
+cp .vibe-assist.ignore.example .vibe-assist.ignore
+
+# Edit to add your patterns
+nano .vibe-assist.ignore
+```
+
+**Supported patterns:**
+- `# Comments` - Lines starting with #
+- `directory/` - Ignore entire directories (trailing slash)
+- `*.log` - Glob patterns with wildcards
+- `exact-file.txt` - Exact file names
+
+**Example:**
+```
+# Ignore dependencies
+node_modules/
+venv/
+
+# Ignore generated files
+*.log
+*.cache
+dist/
+
+# Ignore specific files
+.env
+package-lock.json
+```
+
+Files matching these patterns will be excluded during project context initialization.
 
 ## Development
 

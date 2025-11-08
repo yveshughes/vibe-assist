@@ -98,6 +98,15 @@ export GEMINI_API_KEY='your-api-key-here'
 
 The daemon configuration is in `apps/daemon/.env`
 
+**Optional: Configure ignore patterns** (for project analysis):
+```sh
+# Copy the example ignore file
+cp .vibe-assist.ignore.example .vibe-assist.ignore
+
+# Edit to exclude files/directories from analysis
+# Examples: logs, test files, generated code, etc.
+```
+
 ### 4. Start the development servers
 
 **Option A: Start Everything**

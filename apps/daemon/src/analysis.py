@@ -3,8 +3,9 @@
 import os
 import io
 import json
+import fnmatch
 from pathlib import Path
-from typing import List, Dict
+from typing import List, Dict, Set
 import PIL.Image
 from pydantic import BaseModel
 from google import genai
@@ -94,6 +95,92 @@ def initialize_client():
         return True
     except Exception as e:
         print(f"Error initializing Gemini client: {e}")
+        return False
+
+def _load_ignore_patterns(project_path: str) -> Set[str]:
+    """
+    Load ignore patterns from .vibe-assist.ignore file.
+
+    Returns a set of patterns to ignore during file scanning.
+    Supports:
+    - Comments (lines starting with #)
+    - Glob patterns (*.log, test_*)
+    - Directory patterns (node_modules/, .git/)
+    - Exact file paths
+    """
+    ignore_patterns = set()
+    ignore_file = Path(project_path) / ".vibe-assist.ignore"
+
+    if not ignore_file.exists():
+        print(f"ℹ️  No .vibe-assist.ignore file found at {ignore_file}")
+        return ignore_patterns
+
+    try:
+        with open(ignore_file, 'r') as f:
+            for line in f:
+                line = line.strip()
+                # Skip empty lines and comments
+                if not line or line.startswith('#'):
+                    continue
+                ignore_patterns.add(line)
+
+        if ignore_patterns:
+            print(f"✓ Loaded {len(ignore_patterns)} ignore pattern(s) from .vibe-assist.ignore")
+            for pattern in sorted(ignore_patterns):
+                print(f"  - {pattern}")
+
+        return ignore_patterns
+    except Exception as e:
+        print(f"⚠️  Error reading .vibe-assist.ignore: {e}")
+        return ignore_patterns
+
+def _should_ignore_path(path: Path, project_path: Path, ignore_patterns: Set[str]) -> bool:
+    """
+    Check if a path should be ignored based on ignore patterns.
+
+    Args:
+        path: The absolute path to check
+        project_path: The project root path
+        ignore_patterns: Set of patterns from .vibe-assist.ignore
+
+    Returns:
+        True if the path should be ignored, False otherwise
+    """
+    if not ignore_patterns:
+        return False
+
+    try:
+        # Get relative path from project root
+        rel_path = path.relative_to(project_path)
+        rel_path_str = str(rel_path)
+
+        # Check against each pattern
+        for pattern in ignore_patterns:
+            # Directory pattern (ends with /)
+            if pattern.endswith('/'):
+                dir_pattern = pattern.rstrip('/')
+                # Check if any part of the path matches
+                if any(part == dir_pattern for part in rel_path.parts):
+                    return True
+                # Check if path starts with this directory
+                if rel_path_str.startswith(dir_pattern + '/') or rel_path_str == dir_pattern:
+                    return True
+            # Glob pattern
+            elif '*' in pattern or '?' in pattern:
+                # Match against full relative path
+                if fnmatch.fnmatch(rel_path_str, pattern):
+                    return True
+                # Match against just the filename
+                if fnmatch.fnmatch(path.name, pattern):
+                    return True
+            # Exact match
+            else:
+                if rel_path_str == pattern or path.name == pattern:
+                    return True
+
+        return False
+    except ValueError:
+        # Path is not relative to project_path
         return False
 
 def analyze_fast_path(diff, state, lock):
@@ -485,10 +572,14 @@ def initialize_project_context_full(project_path, state, lock, state_file_path, 
         repo = None
         latest_commit = "N/A"
 
-    # --- 1. Gather all code files ---
+    # --- 1. Load ignore patterns ---
+    ignore_patterns = _load_ignore_patterns(project_path)
+
+    # --- 2. Gather all code files ---
     all_files_content = []
     file_count = 0
     total_size = 0
+    skipped_by_ignore = 0
 
     print("📄 Analyzing files...")
 
@@ -498,12 +589,19 @@ def initialize_project_context_full(project_path, state, lock, state_file_path, 
     # Common dependency/build directories to skip
     skip_dirs = {'node_modules', '.git', 'venv', 'env', 'dist', 'build', '__pycache__', '.vscode', '.idea', '.vibe-assist'}
 
-    for p in Path(project_path).rglob('*'):
+    project_path_obj = Path(project_path)
+
+    for p in project_path_obj.rglob('*'):
         # Skip common build/dependency directories
         if any(part in skip_dirs for part in p.parts):
             continue
 
         if not p.is_file():
+            continue
+
+        # Check against .vibe-assist.ignore patterns
+        if _should_ignore_path(p, project_path_obj, ignore_patterns):
+            skipped_by_ignore += 1
             continue
 
         # Check if file is in gitignore (if repo exists)
@@ -536,6 +634,8 @@ def initialize_project_context_full(project_path, state, lock, state_file_path, 
             continue
     
     print(f"✅ Found and read {file_count} code files (Total size: {total_size / 1024:.2f} KB).")
+    if skipped_by_ignore > 0:
+        print(f"ℹ️  Skipped {skipped_by_ignore} file(s) via .vibe-assist.ignore")
     full_codebase_text = "\n\n".join(all_files_content)
 
     # --- 2. Generate analysis with Gemini ---
