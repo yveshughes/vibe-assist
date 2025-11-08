@@ -27,7 +27,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			CgESLufzwnQkYLtwiX+I5ggQk5g=
+			1bntveMay50t3Otd6LhlyIYg+io=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.VibeAssist.MacWidget" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: yvesjr@me.com (UL6F8C44W2)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
