@@ -96,6 +96,36 @@ async def clear_issues():
         state['security_score'] = 100
     return {"message": f"Cleared {count} issues", "remaining_issues": 0}
 
+@app.post("/state/recalculate")
+async def recalculate_security_score():
+    """Recalculate security score based on active issues."""
+    print("📡 API: POST /state/recalculate")
+    with state_lock:
+        # Start from 100 and deduct based on issues
+        base_score = 100
+
+        for issue in state['active_issues']:
+            severity = issue.get('severity', 'Medium')
+
+            # Deduct points based on severity
+            if severity == 'Critical':
+                base_score -= 20
+            elif severity == 'High':
+                base_score -= 10
+            elif severity == 'Medium':
+                base_score -= 5
+            else:  # Low
+                base_score -= 3
+
+        # Ensure score doesn't go below 0
+        state['security_score'] = max(0, base_score)
+
+        return {
+            "message": "Security score recalculated",
+            "security_score": state['security_score'],
+            "active_issues_count": len(state['active_issues'])
+        }
+
 @app.delete("/issues/{index}")
 async def delete_issue(index: int):
     """Delete a specific issue by index."""
@@ -319,6 +349,7 @@ def main():
     print(f"  - State: GET http://localhost:{port}/state")
     print(f"  - Oracle: POST http://localhost:{port}/oracle/generate_prompt")
     print(f"  - Clear issues: POST http://localhost:{port}/issues/clear")
+    print(f"  - Recalculate score: POST http://localhost:{port}/state/recalculate")
     print(f"  - Delete issue: DELETE http://localhost:{port}/issues/{{index}}")
     print(f"  - Feedback: POST http://localhost:{port}/feedback")
     print(f"  - Health: GET http://localhost:{port}/health")

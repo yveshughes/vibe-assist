@@ -61,7 +61,7 @@ def view_logs(log_file_path: Path, latest_only: bool = False):
         print()
 
 if __name__ == "__main__":
-    latest_only = "--latest" in sys.args
+    latest_only = "--latest" in sys.argv
 
     if len(sys.argv) > 1:
         project_path = sys.argv[-1]  # Last argument is always the path

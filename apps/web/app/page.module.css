@@ -178,11 +178,298 @@
   opacity: 0.8;
 }
 
+.errorHint {
+  margin-top: 8px !important;
+  font-size: 14px;
+  opacity: 0.6 !important;
+}
+
+/* Score Card */
+.scoreCard {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(59, 130, 246, 0.1));
+  border: 1px solid var(--gray-alpha-200);
+  border-radius: 16px;
+  padding: 32px;
+  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.scoreValue {
+  font-size: 72px;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--green), #3b82f6);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+
+.scoreLabel {
+  font-size: 18px;
+  opacity: 0.7;
+  margin-bottom: 16px;
+}
+
+.scoreBar {
+  width: 100%;
+  height: 8px;
+  background: var(--gray-alpha-200);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.scoreBarFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), #3b82f6);
+  transition: width 0.5s ease;
+  border-radius: 4px;
+}
+
+/* Stats Grid */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+.statCard {
+  background: var(--gray-alpha-100);
+  border: 1px solid var(--gray-alpha-200);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+
+.statValue {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--foreground);
+  margin-bottom: 8px;
+}
+
+.statLabel {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+/* Issues Section */
+.issuesSection {
+  background: var(--gray-alpha-100);
+  border: 1px solid var(--gray-alpha-200);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.issuesHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--gray-alpha-200);
+}
+
+.issuesHeader h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.clearAllBtn {
+  padding: 8px 16px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: var(--red);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.clearAllBtn:hover {
+  background: rgba(239, 68, 68, 0.2);
+  transform: translateY(-1px);
+}
+
+.noIssues {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.successIcon {
+  font-size: 72px;
+  color: var(--green);
+  margin-bottom: 16px;
+}
+
+.noIssues p {
+  font-size: 18px;
+  opacity: 0.7;
+  margin: 0;
+}
+
+.issuesList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.issueCard {
+  background: var(--background);
+  border: 1px solid var(--gray-alpha-200);
+  border-radius: 12px;
+  padding: 20px;
+  transition: all 0.2s ease;
+}
+
+.issueCard:hover {
+  transform: translateX(4px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.issueHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.severityBadge {
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.severityBadge.critical {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.severityBadge.high {
+  background: rgba(245, 158, 11, 0.2);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.severityBadge.medium {
+  background: rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.severityBadge.low {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.issueType {
+  font-size: 14px;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.priorityBadge {
+  padding: 4px 8px;
+  background: var(--gray-alpha-200);
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-left: auto;
+}
+
+.issueDescription {
+  font-size: 15px;
+  line-height: 1.6;
+  margin: 12px 0;
+}
+
+.issueLocation {
+  font-size: 13px;
+  font-family: monospace;
+  opacity: 0.7;
+  margin-bottom: 16px;
+  padding: 8px;
+  background: var(--gray-alpha-100);
+  border-radius: 6px;
+}
+
+.issueActions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.actionBtn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.actionBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.resolveBtn {
+  background: rgba(16, 185, 129, 0.1);
+  color: var(--green);
+  border-color: rgba(16, 185, 129, 0.3);
+}
+
+.resolveBtn:hover:not(:disabled) {
+  background: rgba(16, 185, 129, 0.2);
+  transform: translateY(-1px);
+}
+
+.dismissBtn {
+  background: var(--gray-alpha-100);
+  color: var(--foreground);
+  border-color: var(--gray-alpha-200);
+}
+
+.dismissBtn:hover:not(:disabled) {
+  background: var(--gray-alpha-200);
+  transform: translateY(-1px);
+}
+
+.fpBtn {
+  background: rgba(245, 158, 11, 0.1);
+  color: var(--yellow);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.fpBtn:hover:not(:disabled) {
+  background: rgba(245, 158, 11, 0.2);
+  transform: translateY(-1px);
+}
+
 .footer {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   padding-top: 20px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.commitInfo {
+  font-size: 14px;
+  font-family: monospace;
+  opacity: 0.7;
+  padding: 8px 12px;
+  background: var(--gray-alpha-100);
+  border-radius: 6px;
 }
 
 .autoRefresh {
@@ -232,17 +519,46 @@
     font-size: 16px;
   }
 
-  .statusCard {
+  .scoreCard {
     padding: 20px;
   }
 
-  .statusHeader {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
+  .scoreValue {
+    font-size: 48px;
   }
 
-  .statusHeader h2 {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .issuesSection {
+    padding: 20px;
+  }
+
+  .issuesHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .issuesHeader h2 {
     font-size: 20px;
+  }
+
+  .issueCard {
+    padding: 16px;
+  }
+
+  .issueActions {
+    flex-direction: column;
+  }
+
+  .actionBtn {
+    width: 100%;
+  }
+
+  .footer {
+    flex-direction: column;
+    align-items: center;
   }
 }
