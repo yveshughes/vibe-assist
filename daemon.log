@@ -1,0 +1,77 @@
+INFO:     Started server process [93461]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+============================================================
+Vibe Assist - Starting Daemon
+============================================================
+📝 Gemini API calls will be logged to: /Users/andriikonovalenko/vibe-assist/.vibe-assist/gemini-logs.jsonl
+✅ Found existing state file: /Users/andriikonovalenko/vibe-assist/.vibe-assist/state.json
+
+Initializing Gemini API client...
+Gemini client initialized successfully
+
+✅ Project charter is already initialized.
+
+Monitoring project: /Users/andriikonovalenko/vibe-assist
+
+Starting background threads...
+Git watcher starting for: /Users/andriikonovalenko/vibe-assist
+  ✓ Git watcher started
+Screen analyzer starting...
+  ✓ Screen analyzer started
+Screenshots will be saved to: /tmp/vibe-assist-screenshots
+  ✓ State summary reporter started (60s interval)
+
+Starting API server on http://0.0.0.0:8000
+  - State: GET http://localhost:8000/state
+  - Oracle: POST http://localhost:8000/oracle/generate_prompt
+  - Clear issues: POST http://localhost:8000/issues/clear
+  - Recalculate score: POST http://localhost:8000/state/recalculate
+  - Delete issue: DELETE http://localhost:8000/issues/{index}
+  - Feedback: POST http://localhost:8000/feedback
+  - Health: GET http://localhost:8000/health
+  - Docs: http://localhost:8000/docs
+
+📸 Screenshots saved to: /tmp/vibe-assist-screenshots
+
+Press Ctrl+C to stop
+============================================================
+Current HEAD: 09eb95ee
+Screen captured (426785 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_152913.png
+
+============================================================
+👁️  SCREEN ANALYSIS - Proactive Assistance
+============================================================
+🖼️  Analyzing screenshot (426785 bytes)...
+📚 Using 0 false positive(s) + 4 dismissed pattern(s) as learning context
+💡 POTENTIAL ISSUE DETECTED!
+------------------------------------------------------------
+Type: error
+Severity: High
+Description: The 'run failed: command exited (1)' error indicates a critical failure during the development build or execution, actively blocking the application from running. This needs immediate attention.
+------------------------------------------------------------
+✅ STRATEGIC ISSUE ADDED (Priority: 4/5)
+🚨 Total Active Issues: 13
+============================================================
+
+Screen captured (215682 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_152952.png
+
+============================================================
+👁️  SCREEN ANALYSIS - Proactive Assistance
+============================================================
+🖼️  Analyzing screenshot (215682 bytes)...
+📚 Using 0 false positive(s) + 4 dismissed pattern(s) as learning context
+📡 API: GET /state
+INFO:     127.0.0.1:57029 - "GET /state HTTP/1.1" 200 OK
+✅ No critical issues detected
+============================================================
+
+📡 API: GET /state
+INFO:     127.0.0.1:57054 - "GET /state HTTP/1.1" 200 OK
+📡 API: POST /state/recalculate
+INFO:     127.0.0.1:57073 - "POST /state/recalculate HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:57075 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:57075 - "GET /state HTTP/1.1" 200 OK
