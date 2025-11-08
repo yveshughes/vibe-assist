@@ -43,14 +43,33 @@ struct SimpleEntry: TimelineEntry {
 
 struct MacWidgetEntryView : View {
     var entry: Provider.Entry
+    @Environment(\.widgetRenderingMode) var renderingMode
 
     var body: some View {
-        VStack {
-            Text("Time:")
-            Text(entry.date, style: .time)
-
-            Text("Favorite Emoji:")
-            Text(entry.configuration.favoriteEmoji)
+        GlassEffectContainer(spacing: 20.0) {
+            VStack(spacing: 16) {
+                VStack(spacing: 4) {
+                    Text("Time:")
+                        .font(.caption)
+                        .widgetAccentable()
+                    Text(entry.date, style: .time)
+                        .font(.title2)
+                        .fontWeight(.semibold)
+                }
+                .padding()
+                .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 12))
+                
+                VStack(spacing: 4) {
+                    Text("Favorite Emoji:")
+                        .font(.caption)
+                        .widgetAccentable()
+                    Text(entry.configuration.favoriteEmoji)
+                        .font(.largeTitle)
+                }
+                .padding()
+                .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 12))
+            }
+            .padding()
         }
     }
 }
@@ -61,7 +80,11 @@ struct MacWidget: Widget {
     var body: some WidgetConfiguration {
         AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
             MacWidgetEntryView(entry: entry)
-                .containerBackground(.fill.tertiary, for: .widget)
+                .containerBackground(for: .widget) {
+                    // Use a subtle, semi-transparent background
+                    Color.clear
+                }
         }
+        .containerBackgroundRemovable(true) // Allow background to be removed for Liquid Glass effect
     }
 }
