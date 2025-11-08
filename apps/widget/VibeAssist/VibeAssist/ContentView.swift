@@ -8,11 +8,40 @@
 import SwiftUI
 import WebKit
 
+class WebViewNavigationDelegate: NSObject, WKNavigationDelegate {
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        print("✅ WebView loaded successfully: \(webView.url?.absoluteString ?? "unknown")")
+    }
+
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        print("❌ WebView failed to load: \(error.localizedDescription)")
+    }
+
+    func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        print("❌ WebView failed provisional navigation: \(error.localizedDescription)")
+    }
+}
+
 struct WebView: NSViewRepresentable {
     let url: URL
 
+    func makeCoordinator() -> Coordinator {
+        Coordinator()
+    }
+
+    class Coordinator: NSObject {
+        let delegate = WebViewNavigationDelegate()
+    }
+
     func makeNSView(context: Context) -> WKWebView {
-        let webView = WKWebView()
+        let preferences = WKPreferences()
+        let configuration = WKWebViewConfiguration()
+        configuration.preferences = preferences
+
+        let webView = WKWebView(frame: .zero, configuration: configuration)
+        webView.navigationDelegate = context.coordinator.delegate
+
+        print("🌐 Loading URL: \(url.absoluteString)")
         webView.load(URLRequest(url: url))
 
         // Auto-refresh every 5 seconds to match the web app's polling
