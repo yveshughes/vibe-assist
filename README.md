@@ -1,135 +1,53 @@
-# Turborepo starter
+# Vibe Assist
 
-This Turborepo starter is maintained by the Turborepo core team.
+Vibe Assist is a powerful tool that combines a macOS widget with a monitoring core to help you keep track of your system's key metrics. This repository contains the source code for the macOS widget, the public-facing website, and the core monitoring engine.
 
-## Using this example
+## Components
 
-Run the following command:
+This project is a monorepo that includes the following components:
 
-```sh
-npx create-turbo@latest
-```
+### 1. macOS Widget
 
-## What's inside?
+A native macOS widget that displays a checklist of tasks or system statuses, fetched from a Next.js API endpoint.
 
-This Turborepo includes the following packages/apps:
+**Features:**
 
-### Apps and Packages
+-   Displays a list of items with their completion status.
+-   Fetches data from a live API endpoint.
+-   Customizable refresh rate.
+-   Supports small, medium, and large widget sizes.
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+### 2. Website
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
+The public-facing website, built with Next.js, that explains what Vibe Assist does, how it works, and how to install it. The `apps/web` directory contains the source code for the website.
 
-### Utilities
+### 3. Monitoring Core
 
-This Turborepo has some additional tools already setup for you:
+The core of the application, responsible for monitoring system files and powering the app's features. This component is under development and will be located in the `packages` directory.
 
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
+## Getting Started
 
-### Build
+To get started with development, you'll need to have [pnpm](https://pnpm.io/installation) and [Node.js](https://nodejs.org/) installed.
 
-To build all apps and packages, run the following command:
+1.  **Clone the repository:**
+    ```sh
+    git clone https://github.com/yveshughes/vibe-assist.git
+    cd vibe-assist
+    ```
 
-```
-cd my-turborepo
+2.  **Install dependencies:**
+    ```sh
+    pnpm install
+    ```
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
-```
-
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
-
-### Develop
-
-To develop all apps and packages, run the following command:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
-
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
-```
-
-### Remote Caching
-
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
-
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
-```
-
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
-
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
-```
+3.  **Start the development servers:**
+    This will start the development servers for both the website and the API endpoint for the widget.
+    ```sh
+    pnpm dev
+    ```
 
 ## Useful Links
 
-Learn more about the power of Turborepo:
-
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+-   [Turborepo Documentation](https://turborepo.org/docs)
+-   [Next.js Documentation](https://nextjs.org/docs)
+-   [SwiftUI Documentation](https://developer.apple.com/xcode/swiftui/)
