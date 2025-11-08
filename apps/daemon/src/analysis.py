@@ -1,12 +1,10 @@
 # analysis.py
 
 import os
-import io
 import json
 import fnmatch
 from pathlib import Path
 from typing import List, Dict, Set
-import PIL.Image
 from pydantic import BaseModel
 from google import genai
 from google.genai import types
@@ -67,9 +65,9 @@ class SecurityIssue(BaseModel):
 class ProactiveSuggestion(BaseModel):
     """Schema for proactive screen analysis suggestions."""
     has_suggestion: bool
-    suggestion_type: str = ""  # e.g., "error", "refactoring", "bug", "improvement"
+    suggestion_type: str = ""  # e.g., "error", "security", "bug", "architecture"
     description: str = ""
-    severity: str = "Medium"  # "Low", "Medium", "High"
+    severity: str = "High"  # Only "High" or "Critical" should be reported
 
 class OraclePrompt(BaseModel):
     """Schema for Oracle-generated prompts."""
@@ -347,7 +345,7 @@ def _save_state_and_charter_files(state, lock, state_file_path, charter_file_pat
             print(f"❌ Error writing charter to {charter_file_path}: {e}")
 
 
-def _check_charter_alignment(commit, diff_content, charter_items, state, lock):
+def _check_charter_alignment(commit, diff_content, charter_items):
     """
     Check if a commit completes any charter goals.
     Returns a CharterAlignmentCheck object or None if an error occurs.
@@ -520,7 +518,7 @@ def analyze_deep_path(commit, state, lock, state_file_path, context_file_path):
 
                 # --- Check Charter Alignment ---
                 print("\n🎯 Checking charter alignment...")
-                alignment_check = _check_charter_alignment(commit, diff_content, charter_update.charter_items, state, lock)
+                alignment_check = _check_charter_alignment(commit, diff_content, charter_update.charter_items)
 
                 if alignment_check and alignment_check.completed_goals:
                     print(f"✅ Commit completes {len(alignment_check.completed_goals)} charter goal(s)!")
@@ -796,7 +794,7 @@ def triage_suggestions(new_suggestion, existing_issues, state, lock):
             existing_issues_text += f"{i}. [{issue.get('severity', 'Unknown')}] {issue.get('type', '')}: {issue.get('description', '')[:80]}\n"
 
     triage_prompt = f"""
-    You are an intelligent issue triage system for a development assistant.
+    You are an intelligent issue triage system for a development assistant. REJECT low-value suggestions aggressively.
 
     New suggestion detected:
     Type: {new_suggestion.suggestion_type}
@@ -805,20 +803,31 @@ def triage_suggestions(new_suggestion, existing_issues, state, lock):
 
     {existing_issues_text}
 
+    NOTE: This suggestion already passed initial screening against user feedback (false positives/dismissed issues).
+    Your job is to verify it's truly strategic/urgent and assign priority.
+
     Your task:
-    1. Determine if this new suggestion is a duplicate or very similar to any existing issue
-    2. If it's unique and actionable, assign a priority score (1-5, where 5 is critical/urgent)
-    3. Optionally refine the description to make it more actionable
+    1. First, determine if this is truly strategic or urgent:
+       - Is it a security vulnerability, critical bug, or blocking error?
+       - Does it have clear business/technical impact?
+       - Would a senior engineer prioritize fixing this today?
+
+    2. If yes, check for duplicates against existing issues
+
+    3. If unique AND high-value, assign priority score (4-5 only, reject anything below 4):
+       - 5 = Critical: Security issue, production bug, blocks all work
+       - 4 = High: Significant bug, architectural flaw, blocks feature work
+       - 3 or below = REJECT (not strategic enough)
 
     Respond with:
-    - suggestions: Empty list if this is a duplicate, OR a list with one item containing:
+    - suggestions: Empty list if duplicate OR low-value (priority < 4), OR a list with one item:
       - type: Issue type (use "Proactive - {new_suggestion.suggestion_type}")
-      - description: Original or refined description
-      - severity: Original severity or adjusted based on context
-      - priority_score: 1-5 (1=low, 3=medium, 5=critical)
-    - reasoning: Brief explanation of your decision
+      - description: Clear, actionable description
+      - severity: "High" or "Critical"
+      - priority_score: 4 or 5 only
+    - reasoning: Brief explanation (why rejected or why priority X)
 
-    Be strict about duplicates - if the issue is substantially the same as an existing one, mark it as duplicate.
+    IMPORTANT: Reject 90% of suggestions. Only the most critical issues should pass.
     """
 
     try:
@@ -845,16 +854,24 @@ def triage_suggestions(new_suggestion, existing_issues, state, lock):
             print(f"   Triage: Priority {triaged.priority_score}/5 - {triage_result.reasoning}")
             return True, triaged.model_dump()
 
-        # Empty response, use fallback
-        return True, {
-            "type": f"Proactive - {new_suggestion.suggestion_type}",
-            "description": new_suggestion.description,
-            "severity": new_suggestion.severity,
-            "priority_score": 3
-        }
+        # Empty response, use conservative fallback - only add if severity is High
+        if new_suggestion.severity == "High":
+            return True, {
+                "type": f"Proactive - {new_suggestion.suggestion_type}",
+                "description": new_suggestion.description,
+                "severity": new_suggestion.severity,
+                "priority_score": 4
+            }
+        else:
+            print(f"   Triage: Rejected - only High severity accepted in fallback mode")
+            return False, None
     except Exception as e:
         print(f"⚠️  Error in triage: {e}, using fallback")
-        # Fallback to simple duplicate check
+        # Fallback to simple duplicate check - only for High severity
+        if new_suggestion.severity != "High":
+            print(f"   Triage: Rejected - severity not High")
+            return False, None
+
         for existing_issue in existing_issues:
             existing_desc = existing_issue.get("description", "")
             if existing_desc and new_suggestion.description:
@@ -868,7 +885,7 @@ def triage_suggestions(new_suggestion, existing_issues, state, lock):
             "type": f"Proactive - {new_suggestion.suggestion_type}",
             "description": new_suggestion.description,
             "severity": new_suggestion.severity,
-            "priority_score": 3
+            "priority_score": 4
         }
 
 def analyze_screen_proactively(image_bytes, state, lock):
@@ -891,33 +908,69 @@ def analyze_screen_proactively(image_bytes, state, lock):
         with lock:
             active_issues = state.get('active_issues', [])
             security_score = state.get('security_score', 100)
+            user_feedback = state.get('user_feedback', {})
+            false_positives = user_feedback.get('false_positives', [])
+            dismissed_issues = user_feedback.get('dismissed_issues', [])
 
-            # Format existing issues for context
-            existing_issues_text = ""
-            if active_issues:
-                existing_issues_text = "\n\nExisting tracked issues (DO NOT report these again):\n"
-                for i, issue in enumerate(active_issues[-10:], 1):  # Last 10 issues
-                    existing_issues_text += f"{i}. [{issue.get('severity', 'Unknown')}] {issue.get('description', '')[:80]}\n"
+        # Log feedback context being used
+        feedback_count = len(false_positives) + len(dismissed_issues)
+        if feedback_count > 0:
+            print(f"📚 Using {len(false_positives)} false positive(s) + {len(dismissed_issues)} dismissed pattern(s) as learning context")
 
-        prompt = f"""You are a helpful coding assistant analyzing a development environment screenshot.
+        # Format existing issues for context
+        existing_issues_text = ""
+        if active_issues:
+            existing_issues_text = "\n\nExisting tracked issues (DO NOT report these again):\n"
+            for i, issue in enumerate(active_issues[-10:], 1):  # Last 10 issues
+                existing_issues_text += f"{i}. [{issue.get('severity', 'Unknown')}] {issue.get('description', '')[:80]}\n"
 
-Current project status: Security Score {security_score}/100, {len(active_issues)} active issues{existing_issues_text}
+        # Format user feedback - what they've rejected
+        feedback_context = ""
+        if false_positives or dismissed_issues:
+            feedback_context = "\n\nUser has marked these as NOT worth tracking (DO NOT report similar issues):\n"
 
-If you can see a code editor, terminal, or development tool in the image, identify any NEW, VISIBLE issues:
-- Syntax errors or warnings in the code editor
-- Runtime errors in terminal output
-- Code quality improvements in visible code
-- Potential bugs in visible code
+            # Show false positives
+            for i, fp in enumerate(false_positives[-5:], 1):  # Last 5 FPs
+                feedback_context += f"FP{i}. {fp.get('type', '')}: {fp.get('description', '')[:80]}\n"
 
-IMPORTANT: Only report NEW issues that are NOT already in the existing tracked issues list above.
+            # Show recently dismissed
+            for i, dm in enumerate(dismissed_issues[-5:], 1):  # Last 5 dismissed
+                feedback_context += f"DM{i}. {dm.get('type', '')}: {dm.get('description', '')[:80]}\n"
+
+        prompt = f"""You are a senior software architect analyzing a development screenshot. Your job is to identify ONLY strategic or urgent issues that need immediate attention.
+
+Current project status: Security Score {security_score}/100, {len(active_issues)} active issues{existing_issues_text}{feedback_context}
+
+IGNORE these (they are NOT worth reporting):
+- IDE lightbulb hints, suggestions, or code actions
+- Untracked files or uncommitted changes in git (unless blocking)
+- Minor code style or formatting issues
+- Generic linter warnings
+- Auto-update notifications
+- Missing imports that are already highlighted by IDE
+
+ONLY report if you see:
+1. **STRATEGIC ISSUES** (High impact):
+   - Security vulnerabilities in visible code (SQL injection, XSS, exposed secrets, auth bypass)
+   - Critical architectural flaws or anti-patterns
+   - Memory leaks, race conditions, or concurrency bugs in code
+   - Breaking API changes or incompatible dependencies
+
+2. **URGENT ISSUES** (Blocks work):
+   - Runtime errors or exceptions actively preventing execution
+   - Build/compilation failures blocking development
+   - Test failures indicating broken functionality
+   - Deployment errors or production issues
+
+CRITICAL: Be extremely selective. When in doubt, DO NOT report. Most IDE warnings are not worth tracking.
 
 Respond with a JSON object:
-- has_suggestion: true if you see a NEW actionable issue not already tracked, false otherwise
-- suggestion_type: "error", "refactoring", "bug", or "improvement" (empty string if no suggestion)
-- description: brief description under 50 words (empty string if no suggestion)
-- severity: "Low", "Medium", or "High" (default to "Medium")
+- has_suggestion: true ONLY for strategic or urgent issues, false otherwise
+- suggestion_type: "error", "security", "bug", or "architecture" (empty string if no suggestion)
+- description: brief description under 40 words explaining impact and urgency (empty string if no suggestion)
+- severity: "High" for strategic/urgent issues (default to "High" if reporting)
 
-If no new issues or the image doesn't show development tools, set has_suggestion to false."""
+If the screenshot shows normal development (code editing, git status, IDE hints), set has_suggestion to false."""
 
         response = client.models.generate_content(
             model='gemini-2.5-flash',
@@ -961,7 +1014,7 @@ If no new issues or the image doesn't show development tools, set has_suggestion
             return
 
         if suggestion.has_suggestion and suggestion.description:
-            print("💡 NEW SUGGESTION DETECTED!")
+            print("💡 POTENTIAL ISSUE DETECTED!")
             print("-" * 60)
             print(f"Type: {suggestion.suggestion_type}")
             print(f"Severity: {suggestion.severity}")
@@ -977,10 +1030,12 @@ If no new issues or the image doesn't show development tools, set has_suggestion
             if should_add and triaged_suggestion:
                 with lock:
                     state["active_issues"].append(triaged_suggestion)
-                    print(f"✅ Added to active issues (Priority: {triaged_suggestion.get('priority_score', 3)}/5)")
+                    print(f"✅ STRATEGIC ISSUE ADDED (Priority: {triaged_suggestion.get('priority_score', 4)}/5)")
                     print(f"🚨 Total Active Issues: {len(state['active_issues'])}")
+            else:
+                print("⊘ Rejected by triage - not strategic/urgent enough")
         else:
-            print("✅ No suggestions at this time")
+            print("✅ No critical issues detected")
 
         print("="*60 + "\n")
     except Exception as e:
