@@ -81,6 +81,28 @@ async def health_check():
     print("📡 API: GET /health")
     return {"status": "healthy", "gemini_initialized": analysis.client is not None}
 
+@app.post("/issues/clear")
+async def clear_issues():
+    """Clear all active issues."""
+    print("📡 API: POST /issues/clear")
+    with state_lock:
+        count = len(state['active_issues'])
+        state['active_issues'] = []
+        # Reset security score
+        state['security_score'] = 100
+    return {"message": f"Cleared {count} issues", "remaining_issues": 0}
+
+@app.delete("/issues/{index}")
+async def delete_issue(index: int):
+    """Delete a specific issue by index."""
+    print(f"📡 API: DELETE /issues/{index}")
+    with state_lock:
+        if 0 <= index < len(state['active_issues']):
+            removed = state['active_issues'].pop(index)
+            return {"message": "Issue removed", "removed": removed}
+        else:
+            return {"error": "Invalid issue index"}, 404
+
 def print_state_summary():
     """Print a summary of the current state to console."""
     with state_lock:
@@ -214,9 +236,11 @@ def main():
 
     # Start the FastAPI server (this will block the main thread)
     print(f"\nStarting API server on http://{host}:{port}")
-    print(f"  - State endpoint: http://localhost:{port}/state")
-    print(f"  - Oracle endpoint: http://localhost:{port}/oracle/generate_prompt")
-    print(f"  - Health check: http://localhost:{port}/health")
+    print(f"  - State: GET http://localhost:{port}/state")
+    print(f"  - Oracle: POST http://localhost:{port}/oracle/generate_prompt")
+    print(f"  - Clear issues: POST http://localhost:{port}/issues/clear")
+    print(f"  - Delete issue: DELETE http://localhost:{port}/issues/{{index}}")
+    print(f"  - Health: GET http://localhost:{port}/health")
     print(f"  - Docs: http://localhost:{port}/docs")
     print(f"\n📸 Screenshots saved to: /tmp/vibe-assist-screenshots")
     print("\nPress Ctrl+C to stop")

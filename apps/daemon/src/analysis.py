@@ -545,25 +545,35 @@ def analyze_screen_proactively(image_bytes, state, lock):
     try:
         # Get current state context
         with lock:
-            issues_summary = f"{len(state.get('active_issues', []))} active issues"
+            active_issues = state.get('active_issues', [])
             security_score = state.get('security_score', 100)
+
+            # Format existing issues for context
+            existing_issues_text = ""
+            if active_issues:
+                existing_issues_text = "\n\nExisting tracked issues (DO NOT report these again):\n"
+                for i, issue in enumerate(active_issues[-10:], 1):  # Last 10 issues
+                    existing_issues_text += f"{i}. [{issue.get('severity', 'Unknown')}] {issue.get('description', '')[:80]}\n"
 
         prompt = f"""You are a helpful coding assistant analyzing a development environment screenshot.
 
-Current project status: Security Score {security_score}/100, {issues_summary}
+Current project status: Security Score {security_score}/100, {len(active_issues)} active issues{existing_issues_text}
 
-If you can see a code editor, terminal, or development tool in the image, identify any visible:
-- Syntax errors or warnings
-- Code quality improvements
-- Potential refactoring opportunities
+If you can see a code editor, terminal, or development tool in the image, identify any NEW, VISIBLE issues:
+- Syntax errors or warnings in the code editor
+- Runtime errors in terminal output
+- Code quality improvements in visible code
+- Potential bugs in visible code
+
+IMPORTANT: Only report NEW issues that are NOT already in the existing tracked issues list above.
 
 Respond with a JSON object:
-- has_suggestion: true if you see an actionable coding improvement, false otherwise
+- has_suggestion: true if you see a NEW actionable issue not already tracked, false otherwise
 - suggestion_type: "error", "refactoring", "bug", or "improvement" (empty string if no suggestion)
 - description: brief description under 50 words (empty string if no suggestion)
 - severity: "Low", "Medium", or "High" (default to "Medium")
 
-If the image doesn't show code or development tools, set has_suggestion to false."""
+If no new issues or the image doesn't show development tools, set has_suggestion to false."""
 
         response = client.models.generate_content(
             model='gemini-2.5-flash',
@@ -607,20 +617,39 @@ If the image doesn't show code or development tools, set has_suggestion to false
             return
 
         if suggestion.has_suggestion and suggestion.description:
-            print("💡 SUGGESTION FOUND!")
-            print("-" * 60)
-            print(f"Type: {suggestion.suggestion_type}")
-            print(f"Severity: {suggestion.severity}")
-            print(f"Description: {suggestion.description}")
-            print("-" * 60)
-
+            # Check for duplicate issues before adding
             with lock:
-                state["active_issues"].append({
-                    "type": f"Proactive - {suggestion.suggestion_type}",
-                    "description": suggestion.description,
-                    "severity": suggestion.severity
-                })
-                print(f"🚨 Total Active Issues: {len(state['active_issues'])}")
+                # Check if this exact issue already exists
+                is_duplicate = False
+                for existing_issue in state["active_issues"]:
+                    existing_desc = existing_issue.get("description", "")
+                    # Consider it a duplicate if descriptions are very similar (>80% match)
+                    if existing_desc and suggestion.description:
+                        # Simple similarity check: count matching words
+                        existing_words = set(existing_desc.lower().split())
+                        new_words = set(suggestion.description.lower().split())
+                        if existing_words and new_words:
+                            overlap = len(existing_words & new_words) / len(existing_words | new_words)
+                            if overlap > 0.8:
+                                is_duplicate = True
+                                break
+
+                if is_duplicate:
+                    print("ℹ️  Issue already tracked, skipping duplicate")
+                else:
+                    print("💡 NEW SUGGESTION FOUND!")
+                    print("-" * 60)
+                    print(f"Type: {suggestion.suggestion_type}")
+                    print(f"Severity: {suggestion.severity}")
+                    print(f"Description: {suggestion.description}")
+                    print("-" * 60)
+
+                    state["active_issues"].append({
+                        "type": f"Proactive - {suggestion.suggestion_type}",
+                        "description": suggestion.description,
+                        "severity": suggestion.severity
+                    })
+                    print(f"🚨 Total Active Issues: {len(state['active_issues'])}")
         else:
             print("✅ No suggestions at this time")
 
