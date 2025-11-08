@@ -35,13 +35,19 @@ class ComponentInteraction(BaseModel):
     interaction_type: str  # e.g., "API call", "file read", "event"
     description: str
 
+class CharterItem(BaseModel):
+    """Schema for a single charter goal/item."""
+    goal: str
+    completed: bool = False
+    completed_by_commit: str = ""  # Commit hash that completed this goal
+
 class ProjectCharter(BaseModel):
     """Schema for comprehensive project charter data returned by AI."""
     project_name: str
     description: str
     tech_stack: List[str]
     key_directories: Dict[str, str]
-    charter_items: List[str]
+    charter_items: List[CharterItem]
 
     # Enhanced fields for better AI assistant context
     architecture_overview: str  # How components fit together
@@ -69,6 +75,11 @@ class OraclePrompt(BaseModel):
     optimized_prompt: str
     key_context_points: List[str]
     suggested_approach: str
+
+class CharterAlignmentCheck(BaseModel):
+    """Schema for checking if a commit aligns with charter goals."""
+    completed_goals: List[int]  # Indices of charter items that this commit completes
+    reasoning: str  # Brief explanation of why these goals are completed
 
 def initialize_client():
     """Initialize the Gemini client with API key from environment."""
@@ -201,6 +212,26 @@ def _save_state_and_charter_files(state, lock, state_file_path, charter_file_pat
                 for pattern in charter_data.get('coding_patterns', []):
                     patterns_md += f"- {pattern}\n"
 
+            # Build charter goals section with completion status
+            charter_goals_md = "\n## Project Goals\n"
+            for item in charter_data.get('charter_items', []):
+                if isinstance(item, dict):
+                    goal_text = item.get('goal', str(item))
+                    completed = item.get('completed', False)
+                    completed_by = item.get('completed_by_commit', '')
+
+                    if completed:
+                        status_icon = "✅"
+                        if completed_by:
+                            charter_goals_md += f"- {status_icon} ~~{goal_text}~~ *(completed in {completed_by[:8]})*\n"
+                        else:
+                            charter_goals_md += f"- {status_icon} ~~{goal_text}~~\n"
+                    else:
+                        charter_goals_md += f"- ⬜ {goal_text}\n"
+                else:
+                    # Fallback for plain strings (legacy format)
+                    charter_goals_md += f"- ⬜ {item}\n"
+
             md_content = f"""# Project Context: {charter_data.get('project_name', 'Unknown')}
 
 ## Overview
@@ -214,10 +245,7 @@ def _save_state_and_charter_files(state, lock, state_file_path, charter_file_pat
 
 ## Key Directories
 {chr(10).join('- **' + k + '**: ' + v for k, v in charter_data.get('key_directories', {}).items())}
-
-## Project Goals
-{chr(10).join('- ' + item for item in charter_data.get('charter_items', []))}
-{api_endpoints_md}{key_functions_md}{interactions_md}{patterns_md}
+{charter_goals_md}{api_endpoints_md}{key_functions_md}{interactions_md}{patterns_md}
 ## Development Setup
 {charter_data.get('development_setup', 'No setup information available')}
 
@@ -231,6 +259,65 @@ def _save_state_and_charter_files(state, lock, state_file_path, charter_file_pat
         except Exception as e:
             print(f"❌ Error writing charter to {charter_file_path}: {e}")
 
+
+def _check_charter_alignment(commit, diff_content, charter_items, state, lock):
+    """
+    Check if a commit completes any charter goals.
+    Returns a CharterAlignmentCheck object or None if an error occurs.
+    """
+    if not client:
+        return None
+
+    # Format charter items for the prompt
+    charter_items_text = ""
+    for i, item in enumerate(charter_items):
+        goal_text = item.goal if isinstance(item, CharterItem) else item.get('goal', str(item))
+        is_completed = False
+        if isinstance(item, CharterItem):
+            is_completed = item.completed
+        elif isinstance(item, dict):
+            is_completed = item.get('completed', False)
+
+        status = "✓ COMPLETED" if is_completed else "○ PENDING"
+        charter_items_text += f"{i}. [{status}] {goal_text}\n"
+
+    alignment_prompt = f"""
+    Analyze this commit to determine if it completes any of the project charter goals.
+
+    Commit Message: {commit.message.strip()}
+
+    Commit Changes Summary:
+    {diff_content[:50000]}
+
+    Project Charter Goals:
+    {charter_items_text}
+
+    Question: Which charter goals (if any) does this commit meaningfully complete or fulfill?
+
+    Respond with:
+    - completed_goals: List of goal indices (0-based) that this commit completes. Only include goals that are substantially fulfilled by this commit. Empty list if none.
+    - reasoning: Brief explanation (1-2 sentences) of why these goals are considered complete.
+
+    Be conservative - only mark a goal as complete if the commit truly fulfills it, not just makes progress toward it.
+    """
+
+    try:
+        response = client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents=alignment_prompt,
+            config={
+                'max_output_tokens': 500,
+                'response_mime_type': 'application/json',
+                'response_json_schema': CharterAlignmentCheck.model_json_schema(),
+            },
+        )
+
+        if response.text:
+            return CharterAlignmentCheck.model_validate_json(response.text)
+        return None
+    except Exception as e:
+        print(f"⚠️  Error checking charter alignment: {e}")
+        return None
 
 def analyze_deep_path(commit, state, lock, state_file_path, context_file_path):
     """
@@ -293,13 +380,15 @@ def analyze_deep_path(commit, state, lock, state_file_path, context_file_path):
     - Refine the `description` if the commit clarifies the project's purpose
     - Update `tech_stack` if dependencies change
     - Update `key_directories` if new important folders/modules are added
-    - Update `charter_items` to reflect evolving goals (mark complete, add new, refine existing)
+    - Update `charter_items` to reflect evolving goals (add new goals if needed, refine existing goals, but DO NOT change completion status - that's handled separately)
     - Update `architecture_overview` if architectural changes occurred
     - Update `api_endpoints` if new routes/endpoints were added or modified
     - Update `key_functions` if critical functions/classes changed
     - Update `component_interactions` if integration patterns changed
     - Update `coding_patterns` if new patterns were introduced
     - Update `development_setup` if setup/deployment changed
+
+    IMPORTANT: For charter_items, preserve any existing completion status. Each item must have: goal (string), completed (boolean), completed_by_commit (string).
 
     Respond with the COMPLETE, UPDATED project charter as a single JSON object with ALL fields.
     """
@@ -331,7 +420,7 @@ def analyze_deep_path(commit, state, lock, state_file_path, context_file_path):
                         'description': charter_update.description,
                         'tech_stack': charter_update.tech_stack,
                         'key_directories': charter_update.key_directories,
-                        'charter_items': charter_update.charter_items,
+                        'charter_items': [item.model_dump() for item in charter_update.charter_items],
                         # Enhanced fields
                         'architecture_overview': charter_update.architecture_overview,
                         'api_endpoints': [ep.model_dump() for ep in charter_update.api_endpoints],
@@ -341,6 +430,23 @@ def analyze_deep_path(commit, state, lock, state_file_path, context_file_path):
                         'development_setup': charter_update.development_setup,
                     })
                     state['last_analyzed_commit'] = commit.hexsha
+
+                # --- Check Charter Alignment ---
+                print("\n🎯 Checking charter alignment...")
+                alignment_check = _check_charter_alignment(commit, diff_content, charter_update.charter_items, state, lock)
+
+                if alignment_check and alignment_check.completed_goals:
+                    print(f"✅ Commit completes {len(alignment_check.completed_goals)} charter goal(s)!")
+                    print(f"   Reasoning: {alignment_check.reasoning}")
+
+                    with lock:
+                        # Mark goals as completed
+                        for goal_index in alignment_check.completed_goals:
+                            if 0 <= goal_index < len(state['project_charter']['charter_items']):
+                                state['project_charter']['charter_items'][goal_index]['completed'] = True
+                                state['project_charter']['charter_items'][goal_index]['completed_by_commit'] = commit.hexsha
+                                goal_text = state['project_charter']['charter_items'][goal_index]['goal']
+                                print(f"   ✓ Goal {goal_index}: {goal_text[:60]}...")
 
                 # Persist the changes to disk
                 _save_state_and_charter_files(state, lock, state_file_path, context_file_path)
@@ -451,7 +557,7 @@ def initialize_project_context_full(project_path, state, lock, state_file_path, 
 
     4. "key_directories": Map important directories/modules to their purpose.
 
-    5. "charter_items": List 5-7 high-level goals or objectives this project aims to achieve.
+    5. "charter_items": List 5-7 high-level goals or objectives this project aims to achieve. Each item should have a "goal" field with the goal description, "completed" set to false, and "completed_by_commit" as empty string.
 
     6. "architecture_overview": Explain in 2-3 paragraphs how components interact, the system architecture, data flow, and component relationships.
 
@@ -495,7 +601,7 @@ def initialize_project_context_full(project_path, state, lock, state_file_path, 
                 'description': context_data.description,
                 'tech_stack': context_data.tech_stack,
                 'key_directories': context_data.key_directories,
-                'charter_items': context_data.charter_items,
+                'charter_items': [item.model_dump() for item in context_data.charter_items],
                 # Enhanced fields
                 'architecture_overview': context_data.architecture_overview,
                 'api_endpoints': [ep.model_dump() for ep in context_data.api_endpoints],
@@ -526,6 +632,144 @@ def initialize_project_context_full(project_path, state, lock, state_file_path, 
         # Ensure we don't leave a partially initialized state
         with lock:
             state['project_charter']['initialized'] = False
+
+class TriagedSuggestion(BaseModel):
+    """Schema for a triaged and prioritized suggestion."""
+    type: str
+    description: str
+    severity: str
+    priority_score: int  # 1-5, where 5 is highest priority
+
+class SuggestionTriage(BaseModel):
+    """Schema for triaged suggestions with deduplication and prioritization."""
+    suggestions: List[TriagedSuggestion]
+    reasoning: str  # Brief explanation of prioritization
+
+def triage_suggestions(new_suggestion, existing_issues, state, lock):
+    """
+    Triage a new suggestion against existing issues to determine if it should be added.
+    Uses AI to deduplicate, cluster, and prioritize suggestions.
+
+    Returns: (should_add: bool, triaged_suggestion: dict or None)
+    """
+    # First, check against user feedback (dismissed and false positives)
+    with lock:
+        user_feedback = state.get('user_feedback', {})
+        false_positives = user_feedback.get('false_positives', [])
+
+        # Check if this matches a known false positive
+        for fp in false_positives:
+            fp_desc = fp.get('description', '')
+            if fp_desc and new_suggestion.description:
+                fp_words = set(fp_desc.lower().split())
+                new_words = set(new_suggestion.description.lower().split())
+                if fp_words and new_words:
+                    overlap = len(fp_words & new_words) / len(fp_words | new_words)
+                    if overlap > 0.7:  # 70% match with false positive
+                        print(f"   Triage: Skipped - matches false positive pattern")
+                        return False, None
+
+    if not client:
+        # Fallback to simple duplicate check if no AI available
+        for existing_issue in existing_issues:
+            existing_desc = existing_issue.get("description", "")
+            if existing_desc and new_suggestion.description:
+                existing_words = set(existing_desc.lower().split())
+                new_words = set(new_suggestion.description.lower().split())
+                if existing_words and new_words:
+                    overlap = len(existing_words & new_words) / len(existing_words | new_words)
+                    if overlap > 0.8:
+                        return False, None
+        # If not duplicate, add with default priority
+        return True, {
+            "type": f"Proactive - {new_suggestion.suggestion_type}",
+            "description": new_suggestion.description,
+            "severity": new_suggestion.severity,
+            "priority_score": 3  # Default medium priority
+        }
+
+    # Format existing issues for context
+    existing_issues_text = ""
+    if existing_issues:
+        existing_issues_text = "Existing tracked issues:\n"
+        for i, issue in enumerate(existing_issues[-15:], 1):  # Last 15 issues
+            existing_issues_text += f"{i}. [{issue.get('severity', 'Unknown')}] {issue.get('type', '')}: {issue.get('description', '')[:80]}\n"
+
+    triage_prompt = f"""
+    You are an intelligent issue triage system for a development assistant.
+
+    New suggestion detected:
+    Type: {new_suggestion.suggestion_type}
+    Description: {new_suggestion.description}
+    Severity: {new_suggestion.severity}
+
+    {existing_issues_text}
+
+    Your task:
+    1. Determine if this new suggestion is a duplicate or very similar to any existing issue
+    2. If it's unique and actionable, assign a priority score (1-5, where 5 is critical/urgent)
+    3. Optionally refine the description to make it more actionable
+
+    Respond with:
+    - suggestions: Empty list if this is a duplicate, OR a list with one item containing:
+      - type: Issue type (use "Proactive - {new_suggestion.suggestion_type}")
+      - description: Original or refined description
+      - severity: Original severity or adjusted based on context
+      - priority_score: 1-5 (1=low, 3=medium, 5=critical)
+    - reasoning: Brief explanation of your decision
+
+    Be strict about duplicates - if the issue is substantially the same as an existing one, mark it as duplicate.
+    """
+
+    try:
+        response = client.models.generate_content(
+            model='gemini-2.5-flash',
+            contents=triage_prompt,
+            config={
+                'max_output_tokens': 500,
+                'response_mime_type': 'application/json',
+                'response_json_schema': SuggestionTriage.model_json_schema(),
+            },
+        )
+
+        if response.text:
+            triage_result = SuggestionTriage.model_validate_json(response.text)
+
+            if not triage_result.suggestions:
+                # Marked as duplicate
+                print(f"   Triage: Duplicate - {triage_result.reasoning}")
+                return False, None
+
+            # Unique suggestion, add it
+            triaged = triage_result.suggestions[0]
+            print(f"   Triage: Priority {triaged.priority_score}/5 - {triage_result.reasoning}")
+            return True, triaged.model_dump()
+
+        # Empty response, use fallback
+        return True, {
+            "type": f"Proactive - {new_suggestion.suggestion_type}",
+            "description": new_suggestion.description,
+            "severity": new_suggestion.severity,
+            "priority_score": 3
+        }
+    except Exception as e:
+        print(f"⚠️  Error in triage: {e}, using fallback")
+        # Fallback to simple duplicate check
+        for existing_issue in existing_issues:
+            existing_desc = existing_issue.get("description", "")
+            if existing_desc and new_suggestion.description:
+                existing_words = set(existing_desc.lower().split())
+                new_words = set(new_suggestion.description.lower().split())
+                if existing_words and new_words:
+                    overlap = len(existing_words & new_words) / len(existing_words | new_words)
+                    if overlap > 0.8:
+                        return False, None
+        return True, {
+            "type": f"Proactive - {new_suggestion.suggestion_type}",
+            "description": new_suggestion.description,
+            "severity": new_suggestion.severity,
+            "priority_score": 3
+        }
 
 def analyze_screen_proactively(image_bytes, state, lock):
     """
@@ -617,38 +861,23 @@ If no new issues or the image doesn't show development tools, set has_suggestion
             return
 
         if suggestion.has_suggestion and suggestion.description:
-            # Check for duplicate issues before adding
+            print("💡 NEW SUGGESTION DETECTED!")
+            print("-" * 60)
+            print(f"Type: {suggestion.suggestion_type}")
+            print(f"Severity: {suggestion.severity}")
+            print(f"Description: {suggestion.description}")
+            print("-" * 60)
+
+            # Use intelligent triage system
             with lock:
-                # Check if this exact issue already exists
-                is_duplicate = False
-                for existing_issue in state["active_issues"]:
-                    existing_desc = existing_issue.get("description", "")
-                    # Consider it a duplicate if descriptions are very similar (>80% match)
-                    if existing_desc and suggestion.description:
-                        # Simple similarity check: count matching words
-                        existing_words = set(existing_desc.lower().split())
-                        new_words = set(suggestion.description.lower().split())
-                        if existing_words and new_words:
-                            overlap = len(existing_words & new_words) / len(existing_words | new_words)
-                            if overlap > 0.8:
-                                is_duplicate = True
-                                break
+                active_issues = state.get("active_issues", [])
 
-                if is_duplicate:
-                    print("ℹ️  Issue already tracked, skipping duplicate")
-                else:
-                    print("💡 NEW SUGGESTION FOUND!")
-                    print("-" * 60)
-                    print(f"Type: {suggestion.suggestion_type}")
-                    print(f"Severity: {suggestion.severity}")
-                    print(f"Description: {suggestion.description}")
-                    print("-" * 60)
+            should_add, triaged_suggestion = triage_suggestions(suggestion, active_issues, state, lock)
 
-                    state["active_issues"].append({
-                        "type": f"Proactive - {suggestion.suggestion_type}",
-                        "description": suggestion.description,
-                        "severity": suggestion.severity
-                    })
+            if should_add and triaged_suggestion:
+                with lock:
+                    state["active_issues"].append(triaged_suggestion)
+                    print(f"✅ Added to active issues (Priority: {triaged_suggestion.get('priority_score', 3)}/5)")
                     print(f"🚨 Total Active Issues: {len(state['active_issues'])}")
         else:
             print("✅ No suggestions at this time")

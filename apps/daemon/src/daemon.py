@@ -22,7 +22,11 @@ state = {
     "security_score": 100,
     "active_issues": [],
     "project_charter": {"initialized": False},
-    "last_analyzed_commit": None
+    "last_analyzed_commit": None,
+    "user_feedback": {
+        "dismissed_issues": [],  # List of dismissed issue descriptions
+        "false_positives": []    # List of false positive patterns
+    }
 }
 state_lock = threading.Lock()
 
@@ -103,6 +107,56 @@ async def delete_issue(index: int):
         else:
             return {"error": "Invalid issue index"}, 404
 
+class FeedbackRequest(BaseModel):
+    issue_index: int
+    action: str  # "dismiss", "false_positive", "resolve"
+    note: str = ""  # Optional user note
+
+@app.post("/feedback")
+async def submit_feedback(feedback: FeedbackRequest):
+    """Submit user feedback on an issue."""
+    print(f"📡 API: POST /feedback - Action: {feedback.action} on issue {feedback.issue_index}")
+
+    with state_lock:
+        if feedback.issue_index < 0 or feedback.issue_index >= len(state['active_issues']):
+            return {"error": "Invalid issue index"}, 404
+
+        issue = state['active_issues'][feedback.issue_index]
+
+        if feedback.action == "dismiss":
+            # Remove from active issues and add to dismissed list
+            state['user_feedback']['dismissed_issues'].append({
+                "description": issue.get("description", ""),
+                "type": issue.get("type", ""),
+                "dismissed_at": time.time(),
+                "note": feedback.note
+            })
+            state['active_issues'].pop(feedback.issue_index)
+            print(f"✓ Issue dismissed: {issue.get('description', '')[:50]}...")
+            return {"message": "Issue dismissed", "remaining_issues": len(state['active_issues'])}
+
+        elif feedback.action == "false_positive":
+            # Mark as false positive and remove from active issues
+            state['user_feedback']['false_positives'].append({
+                "description": issue.get("description", ""),
+                "type": issue.get("type", ""),
+                "severity": issue.get("severity", ""),
+                "marked_at": time.time(),
+                "note": feedback.note
+            })
+            state['active_issues'].pop(feedback.issue_index)
+            print(f"✓ Marked as false positive: {issue.get('description', '')[:50]}...")
+            return {"message": "Marked as false positive", "remaining_issues": len(state['active_issues'])}
+
+        elif feedback.action == "resolve":
+            # Simply remove from active issues (considered resolved)
+            state['active_issues'].pop(feedback.issue_index)
+            print(f"✓ Issue resolved: {issue.get('description', '')[:50]}...")
+            return {"message": "Issue resolved", "remaining_issues": len(state['active_issues'])}
+
+        else:
+            return {"error": f"Unknown action: {feedback.action}"}, 400
+
 def print_state_summary():
     """Print a summary of the current state to console."""
     with state_lock:
@@ -113,17 +167,38 @@ def print_state_summary():
         print(f"🚨 Active Issues: {len(state['active_issues'])}")
 
         if state['active_issues']:
-            print("\nIssues:")
-            for i, issue in enumerate(state['active_issues'][-5:], 1):  # Last 5 issues
-                print(f"  {i}. [{issue['severity']}] {issue['type']}: {issue['description'][:60]}...")
+            print("\nTop Issues (by priority):")
+            # Sort by priority_score if available
+            sorted_issues = sorted(
+                state['active_issues'][-5:],
+                key=lambda x: x.get('priority_score', 3),
+                reverse=True
+            )
+            for i, issue in enumerate(sorted_issues, 1):
+                priority = issue.get('priority_score', 3)
+                print(f"  {i}. [{issue.get('severity', 'Unknown')}] P{priority} - {issue.get('type', '')}: {issue.get('description', '')[:50]}...")
 
         charter = state.get('project_charter', {})
         if charter.get('initialized'):
             commit_hash = state.get('last_analyzed_commit')
             if commit_hash:
                 print(f"\n📋 Last Analyzed Commit: {commit_hash[:8]}")
+
+            # Show charter completion status
+            charter_items = charter.get('charter_items', [])
+            if charter_items:
+                completed_count = sum(1 for item in charter_items if isinstance(item, dict) and item.get('completed', False))
+                total_count = len(charter_items)
+                print(f"🎯 Charter Progress: {completed_count}/{total_count} goals completed")
         else:
             print("\n📋 Project charter not yet initialized.")
+
+        # Show user feedback stats
+        user_feedback = state.get('user_feedback', {})
+        dismissed_count = len(user_feedback.get('dismissed_issues', []))
+        fp_count = len(user_feedback.get('false_positives', []))
+        if dismissed_count > 0 or fp_count > 0:
+            print(f"\n👤 User Feedback: {dismissed_count} dismissed, {fp_count} false positives")
 
         print("="*60 + "\n")
 
@@ -240,6 +315,7 @@ def main():
     print(f"  - Oracle: POST http://localhost:{port}/oracle/generate_prompt")
     print(f"  - Clear issues: POST http://localhost:{port}/issues/clear")
     print(f"  - Delete issue: DELETE http://localhost:{port}/issues/{{index}}")
+    print(f"  - Feedback: POST http://localhost:{port}/feedback")
     print(f"  - Health: GET http://localhost:{port}/health")
     print(f"  - Docs: http://localhost:{port}/docs")
     print(f"\n📸 Screenshots saved to: /tmp/vibe-assist-screenshots")
