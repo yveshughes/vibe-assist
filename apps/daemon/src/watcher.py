@@ -15,12 +15,32 @@ def start(project_path, state, state_lock, state_file_path, context_file_path):
         return
 
     try:
-        last_commit_hash = repo.head.commit.hexsha
-        print(f"Starting from commit: {last_commit_hash[:8]}")
+        current_head = repo.head.commit.hexsha
+        print(f"Current HEAD: {current_head[:8]}")
     except Exception as e:
         print(f"ERROR: Could not get HEAD commit: {e}")
         return
 
+    # Check if there are unprocessed commits
+    with state_lock:
+        last_analyzed = state.get('last_analyzed_commit')
+
+    if last_analyzed and last_analyzed != current_head:
+        try:
+            print(f"Processing commits since {last_analyzed[:8]}...")
+            # Get all commits between last_analyzed and HEAD
+            commits_to_process = list(repo.iter_commits(f'{last_analyzed}..HEAD'))
+            commits_to_process.reverse()  # Process oldest first
+
+            print(f"Found {len(commits_to_process)} unprocessed commit(s)")
+            for commit in commits_to_process:
+                print(f"Processing historical commit: {commit.hexsha[:8]}")
+                analysis.analyze_deep_path(commit, state, state_lock, state_file_path, context_file_path)
+        except Exception as e:
+            print(f"Warning: Could not process historical commits: {e}")
+            print(f"Continuing from current HEAD...")
+
+    last_commit_hash = current_head
     last_diff_text = ""
 
     while True:
