@@ -191,12 +191,27 @@ def _should_ignore_path(path: Path, project_path: Path, ignore_patterns: Set[str
             # Directory pattern (ends with /)
             if pattern.endswith('/'):
                 dir_pattern = pattern.rstrip('/')
-                # Check if any part of the path matches
-                if any(part == dir_pattern for part in rel_path.parts):
-                    return True
-                # Check if path starts with this directory
-                if rel_path_str.startswith(dir_pattern + '/') or rel_path_str == dir_pattern:
-                    return True
+
+                # Check if dir_pattern contains wildcards
+                if '*' in dir_pattern or '?' in dir_pattern:
+                    # Use fnmatch for each path part
+                    for i, part in enumerate(rel_path.parts):
+                        if fnmatch.fnmatch(part, dir_pattern):
+                            # If this part matches, ignore this path and all descendants
+                            return True
+                    # Also check if any parent directory path matches
+                    for i in range(len(rel_path.parts)):
+                        parent_path = '/'.join(rel_path.parts[:i+1])
+                        if fnmatch.fnmatch(parent_path, dir_pattern):
+                            return True
+                else:
+                    # Non-wildcard directory pattern
+                    # Check if any part of the path matches
+                    if any(part == dir_pattern for part in rel_path.parts):
+                        return True
+                    # Check if path starts with this directory
+                    if rel_path_str.startswith(dir_pattern + '/') or rel_path_str == dir_pattern:
+                        return True
             # Glob pattern
             elif '*' in pattern or '?' in pattern:
                 # Match against full relative path
@@ -683,13 +698,15 @@ def initialize_project_context_full(project_path, state, lock, state_file_path, 
             with open(p, 'r', encoding='utf-8') as f:
                 content = f.read()
                 rel_path_display = p.relative_to(project_path)
-                print(f"  ✓ {rel_path_display} ({len(content)} bytes)")
                 all_files_content.append(f"--- FILE: {rel_path_display} ---\n{content}")
                 file_count += 1
                 total_size += len(content)
+
+                # Print progress every 25 files
+                if file_count % 25 == 0:
+                    print(f"  📊 Analyzed {file_count} files ({total_size / 1024:.2f} KB)...")
         except (UnicodeDecodeError, IOError) as e:
             # Skip files that can't be read as text
-            print(f"  ⊘ {p.relative_to(project_path)} (unreadable: {type(e).__name__})")
             continue
     
     print(f"✅ Found and read {file_count} code files (Total size: {total_size / 1024:.2f} KB).")

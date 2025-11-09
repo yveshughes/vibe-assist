@@ -2,3 +2,29 @@ docs/genai_api.md
 docs/sgr.md
 daemon.log
 .vibe-assist/*
+
+# Lock files
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Binary and compiled files
+*.woff
+*.woff2
+*.icns
+*.car
+*.xcuserstate
+
+# Build artifacts
+apps/widget/VibeAssist 2025-*/
+*.app/
+
+# Dependencies
+node_modules/
+venv/
+
+# Xcode files
+*.xcodeproj/
+*.xcworkspace/
+Assets.xcassets/
+*.plist
