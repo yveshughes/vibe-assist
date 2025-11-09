@@ -1,4 +1,4 @@
-INFO:     Started server process [93461]
+INFO:     Started server process [3918]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
@@ -37,276 +37,164 @@ Starting API server on http://0.0.0.0:8000
 
 Press Ctrl+C to stop
 ============================================================
-Current HEAD: 09eb95ee
-Screen captured (426785 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_152913.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (426785 bytes)...
-📚 Using 0 false positive(s) + 4 dismissed pattern(s) as learning context
-💡 POTENTIAL ISSUE DETECTED!
-------------------------------------------------------------
-Type: error
-Severity: High
-Description: The 'run failed: command exited (1)' error indicates a critical failure during the development build or execution, actively blocking the application from running. This needs immediate attention.
-------------------------------------------------------------
-✅ STRATEGIC ISSUE ADDED (Priority: 4/5)
-🚨 Total Active Issues: 13
-============================================================
-
-Screen captured (215682 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_152952.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (215682 bytes)...
-📚 Using 0 false positive(s) + 4 dismissed pattern(s) as learning context
-📡 API: GET /state
-INFO:     127.0.0.1:57029 - "GET /state HTTP/1.1" 200 OK
-✅ No critical issues detected
-============================================================
-
-📡 API: GET /state
-INFO:     127.0.0.1:57054 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:57073 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:57075 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:57075 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:57101 - "GET /state HTTP/1.1" 200 OK
-New commit detected: eaa45707
+Current HEAD: 025519cd
+Processing commits since f4198492...
+Found 1 unprocessed commit(s)
+Processing historical commit: 025519cd
 
 ============================================================
 🧠 DEEP PATH ANALYSIS - Commit Review
 ============================================================
-📦 Commit: eaa45707
+📦 Commit: 025519cd
 👤 Author: Andrii Konovalenko
-📅 Date: 2025-11-08 15:30:08-08:00
-💬 Message: fix dashboar and landign page issue
+📅 Date: 2025-11-08 15:51:24-08:00
+💬 Message: Update vibe-assist internal state and logs
 ------------------------------------------------------------
-📝 Analyzing 185967 characters of commit changes...
+📝 Analyzing 216439 characters of commit changes...
+Screen captured (289865 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_155835.png
+
+============================================================
+👁️  SCREEN ANALYSIS - Proactive Assistance
+============================================================
+🖼️  Analyzing screenshot (289865 bytes)...
+📚 Using 0 false positive(s) + 4 dismissed pattern(s) as learning context
+✅ No critical issues detected
+============================================================
+
+📡 API: GET /state
+INFO:     127.0.0.1:49857 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:49880 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:49908 - "GET /state HTTP/1.1" 200 OK
+📡 API: POST /state/recalculate
+INFO:     127.0.0.1:49909 - "POST /state/recalculate HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:49908 - "GET /state HTTP/1.1" 200 OK
+✅ Commit analysis complete
+📋 Proposed Charter Update:
+  Project: Vibe Assist
+  Tech Stack: Python, FastAPI, Google Gemini AI...
+  Charter Items: 8 goals
+
+🎯 Checking charter alignment...
+✅ State saved successfully to /Users/andriikonovalenko/vibe-assist/.vibe-assist/state.json
+✅ Charter written successfully to /Users/andriikonovalenko/vibe-assist/.vibe-assist/context.vibe
+============================================================
+
+📡 API: GET /state
+INFO:     127.0.0.1:49937 - "GET /state HTTP/1.1" 200 OK
+Screen captured (294470 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_155912.png
+
+============================================================
+👁️  SCREEN ANALYSIS - Proactive Assistance
+============================================================
+🖼️  Analyzing screenshot (294470 bytes)...
+📚 Using 0 false positive(s) + 4 dismissed pattern(s) as learning context
+📡 API: POST /state/recalculate
+INFO:     127.0.0.1:49961 - "POST /state/recalculate HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:49962 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:49962 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:49987 - "GET /state HTTP/1.1" 200 OK
+💡 POTENTIAL ISSUE DETECTED!
+------------------------------------------------------------
+Type: security
+Severity: High
+Description: A gemini-logs.jsonl file is staged for commit. Log files often contain sensitive data, risking exposure if committed to version control.
+------------------------------------------------------------
+📡 API: GET /state
+INFO:     127.0.0.1:50012 - "GET /state HTTP/1.1" 200 OK
+📡 API: POST /state/recalculate
+INFO:     127.0.0.1:50013 - "POST /state/recalculate HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50012 - "GET /state HTTP/1.1" 200 OK
+✅ STRATEGIC ISSUE ADDED (Priority: 4/5)
+🚨 Total Active Issues: 14
+============================================================
+
+📡 API: GET /state
+INFO:     127.0.0.1:50037 - "GET /state HTTP/1.1" 200 OK
 
 ============================================================
 📊 CURRENT STATE SUMMARY
 ============================================================
 🔐 Security Score: 0/100
-🚨 Active Issues: 13
+🚨 Active Issues: 14
 
 Top Issues (by priority):
-  1. [High] P4 - Proactive - bug: Python runtime error 'AttributeError: module 'sys'...
-  2. [High] P4 - Proactive - error: The 'vite' command is not found, causing the 'pnpm...
-  3. [High] P4 - Proactive - error: The application widget is not displaying the websi...
-  4. [High] P4 - Proactive - error: The 'run.sh' script timed out after 10 minutes, in...
-  5. [High] P4 - Proactive - error: The 'run failed: command exited (1)' error indicat...
+  1. [High] P4 - Proactive - error: The 'vite' command is not found, causing the 'pnpm...
+  2. [High] P4 - Proactive - error: The application widget is not displaying the websi...
+  3. [High] P4 - Proactive - error: The 'run.sh' script timed out after 10 minutes, in...
+  4. [High] P4 - Proactive - error: The 'run failed: command exited (1)' error indicat...
+  5. [High] P4 - Proactive - security: A gemini-logs.jsonl file is staged for commit. Log...
 
-📋 Last Analyzed Commit: 09eb95ee
+📋 Last Analyzed Commit: 025519cd
 🎯 Charter Progress: 0/8 goals completed
 
 👤 User Feedback: 4 dismissed, 0 false positives
 ============================================================
 
 📡 API: GET /state
-INFO:     127.0.0.1:57132 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50061 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:57133 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50062 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:57132 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50061 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:57132 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50090 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50113 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50162 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:57180 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50163 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:57181 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50162 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:57181 - "GET /state HTTP/1.1" 200 OK
-Screen captured (355721 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_153027.png
+INFO:     127.0.0.1:50186 - "GET /state HTTP/1.1" 200 OK
+Screen captured (301929 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_155959.png
 
 ============================================================
 👁️  SCREEN ANALYSIS - Proactive Assistance
 ============================================================
-🖼️  Analyzing screenshot (355721 bytes)...
+🖼️  Analyzing screenshot (301929 bytes)...
 📚 Using 0 false positive(s) + 4 dismissed pattern(s) as learning context
 📡 API: GET /state
-INFO:     127.0.0.1:57206 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:57234 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50211 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:57235 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50212 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:57235 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50211 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50239 - "GET /state HTTP/1.1" 200 OK
 ✅ No critical issues detected
 ============================================================
 
-📡 API: GET /state
-INFO:     127.0.0.1:57261 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:57285 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50262 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:57286 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50263 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:57285 - "GET /state HTTP/1.1" 200 OK
-✅ Commit analysis complete
-📋 Proposed Charter Update:
-  Project: Vibe Assist
-  Tech Stack: Python, FastAPI, Google Gemini AI...
-  Charter Items: 9 goals
-
-🎯 Checking charter alignment...
+INFO:     127.0.0.1:50263 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:57309 - "GET /state HTTP/1.1" 200 OK
-✅ State saved successfully to /Users/andriikonovalenko/vibe-assist/.vibe-assist/state.json
-✅ Charter written successfully to /Users/andriikonovalenko/vibe-assist/.vibe-assist/context.vibe
-============================================================
-
+INFO:     127.0.0.1:50311 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:57333 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50336 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:57334 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50337 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:57333 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50336 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:57356 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50361 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50386 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:57381 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50387 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:57382 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:57382 - "GET /state HTTP/1.1" 200 OK
-Screen captured (376937 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_153103.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (376937 bytes)...
-📚 Using 0 false positive(s) + 4 dismissed pattern(s) as learning context
-📡 API: GET /state
-INFO:     127.0.0.1:57409 - "GET /state HTTP/1.1" 200 OK
-✅ No critical issues detected
-============================================================
-
-
-============================================================
-📊 CURRENT STATE SUMMARY
-============================================================
-🔐 Security Score: 0/100
-🚨 Active Issues: 13
-
-Top Issues (by priority):
-  1. [High] P4 - Proactive - bug: Python runtime error 'AttributeError: module 'sys'...
-  2. [High] P4 - Proactive - error: The 'vite' command is not found, causing the 'pnpm...
-  3. [High] P4 - Proactive - error: The application widget is not displaying the websi...
-  4. [High] P4 - Proactive - error: The 'run.sh' script timed out after 10 minutes, in...
-  5. [High] P4 - Proactive - error: The 'run failed: command exited (1)' error indicat...
-
-📋 Last Analyzed Commit: eaa45707
-🎯 Charter Progress: 0/9 goals completed
-
-👤 User Feedback: 4 dismissed, 0 false positives
-============================================================
-
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:57434 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:57435 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:57434 - "GET /state HTTP/1.1" 200 OK
-Screen captured (212385 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_153142.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (212385 bytes)...
-📚 Using 0 false positive(s) + 4 dismissed pattern(s) as learning context
-✅ No critical issues detected
-============================================================
-
-
-============================================================
-📊 CURRENT STATE SUMMARY
-============================================================
-🔐 Security Score: 0/100
-🚨 Active Issues: 13
-
-Top Issues (by priority):
-  1. [High] P4 - Proactive - bug: Python runtime error 'AttributeError: module 'sys'...
-  2. [High] P4 - Proactive - error: The 'vite' command is not found, causing the 'pnpm...
-  3. [High] P4 - Proactive - error: The application widget is not displaying the websi...
-  4. [High] P4 - Proactive - error: The 'run.sh' script timed out after 10 minutes, in...
-  5. [High] P4 - Proactive - error: The 'run failed: command exited (1)' error indicat...
-
-📋 Last Analyzed Commit: eaa45707
-🎯 Charter Progress: 0/9 goals completed
-
-👤 User Feedback: 4 dismissed, 0 false positives
-============================================================
-
-Screen captured (212494 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_153218.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (212494 bytes)...
-📚 Using 0 false positive(s) + 4 dismissed pattern(s) as learning context
-✅ No critical issues detected
-============================================================
-
-Screen captured (211293 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_153251.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (211293 bytes)...
-📚 Using 0 false positive(s) + 4 dismissed pattern(s) as learning context
-✅ No critical issues detected
-============================================================
-
-
-============================================================
-📊 CURRENT STATE SUMMARY
-============================================================
-🔐 Security Score: 0/100
-🚨 Active Issues: 13
-
-Top Issues (by priority):
-  1. [High] P4 - Proactive - bug: Python runtime error 'AttributeError: module 'sys'...
-  2. [High] P4 - Proactive - error: The 'vite' command is not found, causing the 'pnpm...
-  3. [High] P4 - Proactive - error: The application widget is not displaying the websi...
-  4. [High] P4 - Proactive - error: The 'run.sh' script timed out after 10 minutes, in...
-  5. [High] P4 - Proactive - error: The 'run failed: command exited (1)' error indicat...
-
-📋 Last Analyzed Commit: eaa45707
-🎯 Charter Progress: 0/9 goals completed
-
-👤 User Feedback: 4 dismissed, 0 false positives
-============================================================
-
-Screen captured (343606 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_153327.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (343606 bytes)...
-📚 Using 0 false positive(s) + 4 dismissed pattern(s) as learning context
-💡 POTENTIAL ISSUE DETECTED!
-------------------------------------------------------------
-Type: error
-Severity: High
-Description: The 'run.sh' script indicates a failure during application startup commands like 'pnpm dev', blocking the web app from launching.
-------------------------------------------------------------
-✅ STRATEGIC ISSUE ADDED (Priority: 4/5)
-🚨 Total Active Issues: 14
-============================================================
-
-Screen captured (346541 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_153411.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (346541 bytes)...
-📚 Using 0 false positive(s) + 4 dismissed pattern(s) as learning context
+INFO:     127.0.0.1:50386 - "GET /state HTTP/1.1" 200 OK
 
 ============================================================
 📊 CURRENT STATE SUMMARY
@@ -319,1222 +207,387 @@ Top Issues (by priority):
   2. [High] P4 - Proactive - error: The application widget is not displaying the websi...
   3. [High] P4 - Proactive - error: The 'run.sh' script timed out after 10 minutes, in...
   4. [High] P4 - Proactive - error: The 'run failed: command exited (1)' error indicat...
-  5. [High] P4 - Proactive - error: The 'run.sh' script indicates a failure during app...
+  5. [High] P4 - Proactive - security: A gemini-logs.jsonl file is staged for commit. Log...
 
-📋 Last Analyzed Commit: eaa45707
-🎯 Charter Progress: 0/9 goals completed
-
-👤 User Feedback: 4 dismissed, 0 false positives
-============================================================
-
-✅ No critical issues detected
-============================================================
-
-Screen captured (350871 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_153450.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (350871 bytes)...
-📚 Using 0 false positive(s) + 4 dismissed pattern(s) as learning context
-✅ No critical issues detected
-============================================================
-
-
-============================================================
-📊 CURRENT STATE SUMMARY
-============================================================
-🔐 Security Score: 0/100
-🚨 Active Issues: 14
-
-Top Issues (by priority):
-  1. [High] P4 - Proactive - error: The 'vite' command is not found, causing the 'pnpm...
-  2. [High] P4 - Proactive - error: The application widget is not displaying the websi...
-  3. [High] P4 - Proactive - error: The 'run.sh' script timed out after 10 minutes, in...
-  4. [High] P4 - Proactive - error: The 'run failed: command exited (1)' error indicat...
-  5. [High] P4 - Proactive - error: The 'run.sh' script indicates a failure during app...
-
-📋 Last Analyzed Commit: eaa45707
-🎯 Charter Progress: 0/9 goals completed
+📋 Last Analyzed Commit: 025519cd
+🎯 Charter Progress: 0/8 goals completed
 
 👤 User Feedback: 4 dismissed, 0 false positives
 ============================================================
 
-Screen captured (385017 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_153530.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (385017 bytes)...
-📚 Using 0 false positive(s) + 4 dismissed pattern(s) as learning context
-✅ No critical issues detected
-============================================================
-
 📡 API: GET /state
-INFO:     127.0.0.1:58735 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:58771 - "GET /state HTTP/1.1" 200 OK
-INFO:     127.0.0.1:58781 - "OPTIONS /feedback HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50428 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50428 - "OPTIONS /feedback HTTP/1.1" 200 OK
 📡 API: POST /feedback - Action: false_positive on issue 0
 ✓ Marked as false positive: Critical import errors for standard libraries (io,...
-INFO:     127.0.0.1:58781 - "POST /feedback HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50428 - "POST /feedback HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:58781 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50428 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /feedback - Action: false_positive on issue 0
 ✓ Marked as false positive: Red underline in analysis.py line 65 suggests a sy...
-INFO:     127.0.0.1:58781 - "POST /feedback HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50428 - "POST /feedback HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:58781 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50428 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /feedback - Action: false_positive on issue 0
 ✓ Marked as false positive: A Python daemon process is showing an error state ...
-INFO:     127.0.0.1:58781 - "POST /feedback HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50428 - "POST /feedback HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:58781 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50428 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /feedback - Action: false_positive on issue 0
 ✓ Marked as false positive: Next.js warns about an incorrectly inferred worksp...
-INFO:     127.0.0.1:58781 - "POST /feedback HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50428 - "POST /feedback HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:58781 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50428 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /feedback - Action: false_positive on issue 0
 ✓ Marked as false positive: The system fails to process historical commits for...
-INFO:     127.0.0.1:58781 - "POST /feedback HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50428 - "POST /feedback HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:58781 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50428 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /feedback - Action: false_positive on issue 0
 ✓ Marked as false positive: Git pull failed with 'fatal: Need to specify how t...
-INFO:     127.0.0.1:58781 - "POST /feedback HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50428 - "POST /feedback HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:58781 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50428 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /feedback - Action: false_positive on issue 0
 ✓ Marked as false positive: Terminal warning 'no sandbox' may indicate a criti...
-INFO:     127.0.0.1:58781 - "POST /feedback HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50428 - "POST /feedback HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:58781 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50428 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /feedback - Action: false_positive on issue 0
 ✓ Marked as false positive: Multiple zsh and node processes are terminated (re...
-INFO:     127.0.0.1:58781 - "POST /feedback HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50428 - "POST /feedback HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:58781 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50428 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /feedback - Action: false_positive on issue 0
 ✓ Marked as false positive: Python runtime error 'AttributeError: module 'sys'...
-INFO:     127.0.0.1:58781 - "POST /feedback HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50428 - "POST /feedback HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:58781 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /feedback - Action: false_positive on issue 0
-✓ Marked as false positive: The 'vite' command is not found, causing the 'pnpm...
-INFO:     127.0.0.1:58781 - "POST /feedback HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:58781 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /feedback - Action: false_positive on issue 0
-✓ Marked as false positive: The application widget is not displaying the websi...
-INFO:     127.0.0.1:58781 - "POST /feedback HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:58781 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /feedback - Action: false_positive on issue 0
-✓ Marked as false positive: The 'run.sh' script timed out after 10 minutes, in...
-INFO:     127.0.0.1:58781 - "POST /feedback HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:58781 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /feedback - Action: false_positive on issue 0
-✓ Marked as false positive: The 'run failed: command exited (1)' error indicat...
-INFO:     127.0.0.1:58781 - "POST /feedback HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:58781 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /feedback - Action: false_positive on issue 0
-✓ Marked as false positive: The 'run.sh' script indicates a failure during app...
-INFO:     127.0.0.1:58781 - "POST /feedback HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:58781 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:58781 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:58795 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:58781 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:58831 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:58856 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:58857 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:58856 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:58903 - "GET /state HTTP/1.1" 200 OK
-Screen captured (209925 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_153607.png
+INFO:     127.0.0.1:50428 - "GET /state HTTP/1.1" 200 OK
+Screen captured (225467 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_160040.png
 
 ============================================================
 👁️  SCREEN ANALYSIS - Proactive Assistance
 ============================================================
-🖼️  Analyzing screenshot (209925 bytes)...
+🖼️  Analyzing screenshot (225467 bytes)...
+📚 Using 9 false positive(s) + 4 dismissed pattern(s) as learning context
+📡 API: POST /feedback - Action: false_positive on issue 0
+✓ Marked as false positive: The 'vite' command is not found, causing the 'pnpm...
+INFO:     127.0.0.1:50428 - "POST /feedback HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50428 - "GET /state HTTP/1.1" 200 OK
+📡 API: POST /feedback - Action: false_positive on issue 0
+✓ Marked as false positive: The application widget is not displaying the websi...
+INFO:     127.0.0.1:50448 - "POST /feedback HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50448 - "GET /state HTTP/1.1" 200 OK
+📡 API: POST /feedback - Action: false_positive on issue 0
+✓ Marked as false positive: The 'run.sh' script timed out after 10 minutes, in...
+INFO:     127.0.0.1:50448 - "POST /feedback HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50448 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50448 - "GET /state HTTP/1.1" 200 OK
+📡 API: POST /state/recalculate
+INFO:     127.0.0.1:50454 - "POST /state/recalculate HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50448 - "GET /state HTTP/1.1" 200 OK
+📡 API: POST /feedback - Action: false_positive on issue 0
+✓ Marked as false positive: The 'run failed: command exited (1)' error indicat...
+INFO:     127.0.0.1:50448 - "POST /feedback HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50448 - "GET /state HTTP/1.1" 200 OK
+📡 API: POST /feedback - Action: false_positive on issue 0
+✓ Marked as false positive: A gemini-logs.jsonl file is staged for commit. Log...
+INFO:     127.0.0.1:50448 - "POST /feedback HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50448 - "GET /state HTTP/1.1" 200 OK
+✅ No critical issues detected
+============================================================
+
+📡 API: GET /state
+INFO:     127.0.0.1:50496 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50537 - "GET /state HTTP/1.1" 200 OK
+📡 API: POST /state/recalculate
+INFO:     127.0.0.1:50538 - "POST /state/recalculate HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50538 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50538 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50572 - "GET /state HTTP/1.1" 200 OK
+📡 API: POST /state/recalculate
+INFO:     127.0.0.1:50618 - "POST /state/recalculate HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50620 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50620 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50669 - "GET /state HTTP/1.1" 200 OK
+📡 API: POST /state/recalculate
+INFO:     127.0.0.1:50698 - "POST /state/recalculate HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50699 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50698 - "GET /state HTTP/1.1" 200 OK
+Screen captured (252670 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_160115.png
+
+============================================================
+👁️  SCREEN ANALYSIS - Proactive Assistance
+============================================================
+🖼️  Analyzing screenshot (252670 bytes)...
 📚 Using 14 false positive(s) + 4 dismissed pattern(s) as learning context
 📡 API: GET /state
-INFO:     127.0.0.1:58927 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50727 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:58928 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50766 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:58928 - "GET /state HTTP/1.1" 200 OK
-
-============================================================
-📊 CURRENT STATE SUMMARY
-============================================================
-🔐 Security Score: 100/100
-🚨 Active Issues: 0
-
-📋 Last Analyzed Commit: eaa45707
-🎯 Charter Progress: 0/9 goals completed
-
-👤 User Feedback: 4 dismissed, 14 false positives
-============================================================
-
+INFO:     127.0.0.1:50767 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:58964 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:58991 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:58992 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:58992 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59027 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50767 - "GET /state HTTP/1.1" 200 OK
 💡 POTENTIAL ISSUE DETECTED!
 ------------------------------------------------------------
 Type: error
 Severity: High
-Description: A prominent '1 error' notification is visible, suggesting a critical runtime issue or failure that needs immediate investigation and resolution.
+Description: A syntax error in 'analysis.py' at line 65 is preventing the script from running. This needs immediate fixing to unblock development.
 ------------------------------------------------------------
-   Triage: Priority 5/5 - This is a critical runtime error indicated by a prominent notification, requiring immediate investigation and resolution. It suggests a production-blocking issue with significant technical and business impact, making it a top priority for a senior engineer.
-✅ STRATEGIC ISSUE ADDED (Priority: 5/5)
+⚠️  Error in triage: 1 validation error for SuggestionTriage
+  Invalid JSON: EOF while parsing a string at line 1 column 255 [type=json_invalid, input_value='{"suggestions": [{"type"..., "reasoning": "This is', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.12/v/json_invalid, using fallback
+✅ STRATEGIC ISSUE ADDED (Priority: 4/5)
 🚨 Total Active Issues: 1
 ============================================================
 
 📡 API: GET /state
-INFO:     127.0.0.1:59054 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50793 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50819 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:59055 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50820 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:59054 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59090 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59123 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:59124 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59123 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59147 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59181 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:59183 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59183 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59205 - "GET /state HTTP/1.1" 200 OK
-Screen captured (360536 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_153658.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (360536 bytes)...
-📚 Using 14 false positive(s) + 4 dismissed pattern(s) as learning context
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:59234 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59235 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59235 - "GET /state HTTP/1.1" 200 OK
-✅ No critical issues detected
-============================================================
-
-📡 API: GET /state
-INFO:     127.0.0.1:59262 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59299 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:59300 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59299 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50819 - "GET /state HTTP/1.1" 200 OK
 
 ============================================================
 📊 CURRENT STATE SUMMARY
 ============================================================
-🔐 Security Score: 80/100
+🔐 Security Score: 90/100
 🚨 Active Issues: 1
 
 Top Issues (by priority):
-  1. [Critical] P5 - Proactive - error: A prominent '1 error' notification is visible, sug...
+  1. [High] P4 - Proactive - error: A syntax error in 'analysis.py' at line 65 is prev...
 
-📋 Last Analyzed Commit: eaa45707
-🎯 Charter Progress: 0/9 goals completed
+📋 Last Analyzed Commit: 025519cd
+🎯 Charter Progress: 0/8 goals completed
 
 👤 User Feedback: 4 dismissed, 14 false positives
 ============================================================
 
 📡 API: GET /state
-INFO:     127.0.0.1:59330 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59360 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50846 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:59361 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50870 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:59361 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50871 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:59384 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50870 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:59412 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50899 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:59413 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50922 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:59412 - "GET /state HTTP/1.1" 200 OK
-Screen captured (362395 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_153734.png
+INFO:     127.0.0.1:50923 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50923 - "GET /state HTTP/1.1" 200 OK
+Screen captured (314831 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_160156.png
 
 ============================================================
 👁️  SCREEN ANALYSIS - Proactive Assistance
 ============================================================
-🖼️  Analyzing screenshot (362395 bytes)...
+🖼️  Analyzing screenshot (314831 bytes)...
 📚 Using 14 false positive(s) + 4 dismissed pattern(s) as learning context
 📡 API: GET /state
-INFO:     127.0.0.1:59438 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59464 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:59465 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59465 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59504 - "GET /state HTTP/1.1" 200 OK
-✅ No critical issues detected
-============================================================
-
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:59527 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59528 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59528 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59552 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59589 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:59590 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59589 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59631 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59661 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:59662 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59661 - "GET /state HTTP/1.1" 200 OK
-
-============================================================
-📊 CURRENT STATE SUMMARY
-============================================================
-🔐 Security Score: 80/100
-🚨 Active Issues: 1
-
-Top Issues (by priority):
-  1. [Critical] P5 - Proactive - error: A prominent '1 error' notification is visible, sug...
-
-📋 Last Analyzed Commit: eaa45707
-🎯 Charter Progress: 0/9 goals completed
-
-👤 User Feedback: 4 dismissed, 14 false positives
-============================================================
-
-📡 API: GET /state
-INFO:     127.0.0.1:59689 - "GET /state HTTP/1.1" 200 OK
-Screen captured (361166 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_153819.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (361166 bytes)...
-📚 Using 14 false positive(s) + 4 dismissed pattern(s) as learning context
-📡 API: GET /state
-INFO:     127.0.0.1:59730 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:59731 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59730 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59766 - "GET /state HTTP/1.1" 200 OK
-✅ No critical issues detected
-============================================================
-
-📡 API: GET /state
-INFO:     127.0.0.1:59797 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:59798 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59797 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59818 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:59843 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59844 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59843 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59874 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:59913 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59914 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59914 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59937 - "GET /state HTTP/1.1" 200 OK
-Screen captured (345463 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_153859.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (345463 bytes)...
-📚 Using 14 false positive(s) + 4 dismissed pattern(s) as learning context
-📡 API: GET /state
-INFO:     127.0.0.1:59974 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:59976 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:59974 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60016 - "GET /state HTTP/1.1" 200 OK
-✅ No critical issues detected
-============================================================
-
-📡 API: GET /state
-INFO:     127.0.0.1:60057 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60058 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60057 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60074 - "GET /state HTTP/1.1" 200 OK
-
-============================================================
-📊 CURRENT STATE SUMMARY
-============================================================
-🔐 Security Score: 80/100
-🚨 Active Issues: 1
-
-Top Issues (by priority):
-  1. [Critical] P5 - Proactive - error: A prominent '1 error' notification is visible, sug...
-
-📋 Last Analyzed Commit: eaa45707
-🎯 Charter Progress: 0/9 goals completed
-
-👤 User Feedback: 4 dismissed, 14 false positives
-============================================================
-
-📡 API: GET /state
-INFO:     127.0.0.1:60074 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60104 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60104 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60119 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60104 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60141 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60143 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60141 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60141 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60186 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60186 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60200 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60186 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60226 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60227 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60226 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60226 - "GET /state HTTP/1.1" 200 OK
-Screen captured (348325 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_153937.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (348325 bytes)...
-📚 Using 14 false positive(s) + 4 dismissed pattern(s) as learning context
-📡 API: GET /state
-INFO:     127.0.0.1:60251 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60251 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60266 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60251 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60281 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60282 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60281 - "GET /state HTTP/1.1" 200 OK
-✅ No critical issues detected
-============================================================
-
-📡 API: GET /state
-INFO:     127.0.0.1:60281 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60306 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60306 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60326 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60306 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60337 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60338 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60337 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60337 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60362 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60362 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60376 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60362 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60387 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60388 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60387 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60387 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60415 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60415 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60429 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60415 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60439 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60441 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60439 - "GET /state HTTP/1.1" 200 OK
-
-============================================================
-📊 CURRENT STATE SUMMARY
-============================================================
-🔐 Security Score: 80/100
-🚨 Active Issues: 1
-
-Top Issues (by priority):
-  1. [Critical] P5 - Proactive - error: A prominent '1 error' notification is visible, sug...
-
-📋 Last Analyzed Commit: eaa45707
-🎯 Charter Progress: 0/9 goals completed
-
-👤 User Feedback: 4 dismissed, 14 false positives
-============================================================
-
-Screen captured (366748 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_154015.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (366748 bytes)...
-📚 Using 14 false positive(s) + 4 dismissed pattern(s) as learning context
-📡 API: GET /state
-INFO:     127.0.0.1:60439 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60466 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60466 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60482 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60466 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60493 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60494 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60493 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50950 - "GET /state HTTP/1.1" 200 OK
 💡 POTENTIAL ISSUE DETECTED!
 ------------------------------------------------------------
-Type: error
+Type: security
 Severity: High
-Description: Missing Xcode entitlements prevent the WebView from accessing network content, blocking core application functionality.
+Description: Unsanitized user input passed to `subprocess.call` with `shell=True` allows Remote Code Execution (RCE). This is a critical security vulnerability needing immediate attention.
 ------------------------------------------------------------
 📡 API: GET /state
-INFO:     127.0.0.1:60493 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50975 - "GET /state HTTP/1.1" 200 OK
+📡 API: POST /state/recalculate
+INFO:     127.0.0.1:50976 - "POST /state/recalculate HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:50976 - "GET /state HTTP/1.1" 200 OK
 ✅ STRATEGIC ISSUE ADDED (Priority: 4/5)
 🚨 Total Active Issues: 2
 ============================================================
 
 📡 API: GET /state
-INFO:     127.0.0.1:60521 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51034 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:60521 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51078 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60536 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51079 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:60521 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51078 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:60549 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51106 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:51128 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60550 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51130 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:60550 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51128 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:60550 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51155 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:60574 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51180 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60574 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51181 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:60591 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60574 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60603 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60604 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60603 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60603 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60626 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60626 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60641 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60626 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60652 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60653 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60652 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60652 - "GET /state HTTP/1.1" 200 OK
-Screen captured (343731 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_154057.png
+INFO:     127.0.0.1:51180 - "GET /state HTTP/1.1" 200 OK
+Screen captured (301589 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_160234.png
 
 ============================================================
 👁️  SCREEN ANALYSIS - Proactive Assistance
 ============================================================
-🖼️  Analyzing screenshot (343731 bytes)...
+🖼️  Analyzing screenshot (301589 bytes)...
 📚 Using 14 false positive(s) + 4 dismissed pattern(s) as learning context
-📡 API: GET /state
-INFO:     127.0.0.1:60676 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60676 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60691 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60676 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60703 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60704 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60703 - "GET /state HTTP/1.1" 200 OK
-✅ No critical issues detected
-============================================================
-
-📡 API: GET /state
-INFO:     127.0.0.1:60703 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60733 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60733 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60748 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60733 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60762 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60763 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60762 - "GET /state HTTP/1.1" 200 OK
 
 ============================================================
 📊 CURRENT STATE SUMMARY
 ============================================================
-🔐 Security Score: 70/100
+🔐 Security Score: 80/100
 🚨 Active Issues: 2
 
 Top Issues (by priority):
-  1. [Critical] P5 - Proactive - error: A prominent '1 error' notification is visible, sug...
-  2. [High] P4 - Proactive - error: Missing Xcode entitlements prevent the WebView fro...
+  1. [High] P4 - Proactive - error: A syntax error in 'analysis.py' at line 65 is prev...
+  2. [High] P4 - Proactive - security: Unsanitized user input passed to `subprocess.call`...
 
-📋 Last Analyzed Commit: eaa45707
-🎯 Charter Progress: 0/9 goals completed
+📋 Last Analyzed Commit: 025519cd
+🎯 Charter Progress: 0/8 goals completed
 
 👤 User Feedback: 4 dismissed, 14 false positives
 ============================================================
 
 📡 API: GET /state
-INFO:     127.0.0.1:60762 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60788 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60788 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60803 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60803 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60814 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60816 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60814 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60814 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60841 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60841 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60856 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60841 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60868 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60869 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60869 - "GET /state HTTP/1.1" 200 OK
-Screen captured (343610 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_154133.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (343610 bytes)...
-📚 Using 14 false positive(s) + 4 dismissed pattern(s) as learning context
-📡 API: GET /state
-INFO:     127.0.0.1:60869 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60895 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51206 - "GET /state HTTP/1.1" 200 OK
 ✅ No critical issues detected
 ============================================================
 
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60895 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51231 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:60909 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51232 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:60895 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51231 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:60920 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51256 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:51283 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60921 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51285 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:60921 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51285 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:60921 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51308 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:60944 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60944 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51333 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60958 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51334 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:60944 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51333 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:60969 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:60970 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60969 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60969 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60995 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:60995 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61009 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61009 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61020 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61021 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61020 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61020 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61048 - "GET /state HTTP/1.1" 200 OK
-Screen captured (343706 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_154208.png
+INFO:     127.0.0.1:51362 - "GET /state HTTP/1.1" 200 OK
+Screen captured (248480 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_160311.png
 
 ============================================================
 👁️  SCREEN ANALYSIS - Proactive Assistance
 ============================================================
-🖼️  Analyzing screenshot (343706 bytes)...
+🖼️  Analyzing screenshot (248480 bytes)...
 📚 Using 14 false positive(s) + 4 dismissed pattern(s) as learning context
+📡 API: GET /state
+INFO:     127.0.0.1:51390 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61048 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51391 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:61064 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51390 - "GET /state HTTP/1.1" 200 OK
+✅ No critical issues detected
+============================================================
+
 📡 API: GET /state
-INFO:     127.0.0.1:61048 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51414 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:61075 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51443 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61076 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51444 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:61075 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51443 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:51467 - "GET /state HTTP/1.1" 200 OK
+📡 API: POST /state/recalculate
+INFO:     127.0.0.1:51493 - "POST /state/recalculate HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:51494 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:51493 - "GET /state HTTP/1.1" 200 OK
 
 ============================================================
 📊 CURRENT STATE SUMMARY
 ============================================================
-🔐 Security Score: 70/100
+🔐 Security Score: 80/100
 🚨 Active Issues: 2
 
 Top Issues (by priority):
-  1. [Critical] P5 - Proactive - error: A prominent '1 error' notification is visible, sug...
-  2. [High] P4 - Proactive - error: Missing Xcode entitlements prevent the WebView fro...
+  1. [High] P4 - Proactive - error: A syntax error in 'analysis.py' at line 65 is prev...
+  2. [High] P4 - Proactive - security: Unsanitized user input passed to `subprocess.call`...
 
-📋 Last Analyzed Commit: eaa45707
-🎯 Charter Progress: 0/9 goals completed
-
-👤 User Feedback: 4 dismissed, 14 false positives
-============================================================
-
-✅ No critical issues detected
-============================================================
-
-📡 API: GET /state
-INFO:     127.0.0.1:61075 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61106 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61106 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61127 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61106 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61135 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61136 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61135 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61135 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61159 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61159 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61177 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61159 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61187 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61188 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61187 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61187 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61210 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61210 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61225 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61225 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61236 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61238 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61236 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61236 - "GET /state HTTP/1.1" 200 OK
-Screen captured (279632 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_154245.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (279632 bytes)...
-📚 Using 14 false positive(s) + 4 dismissed pattern(s) as learning context
-📡 API: GET /state
-INFO:     127.0.0.1:61262 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61262 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61277 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61262 - "GET /state HTTP/1.1" 200 OK
-✅ No critical issues detected
-============================================================
-
-📡 API: GET /state
-INFO:     127.0.0.1:61288 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61289 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61288 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61288 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61313 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61313 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61328 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61328 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61340 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61341 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61341 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61341 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61371 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61371 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61386 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61371 - "GET /state HTTP/1.1" 200 OK
-
-============================================================
-📊 CURRENT STATE SUMMARY
-============================================================
-🔐 Security Score: 70/100
-🚨 Active Issues: 2
-
-Top Issues (by priority):
-  1. [Critical] P5 - Proactive - error: A prominent '1 error' notification is visible, sug...
-  2. [High] P4 - Proactive - error: Missing Xcode entitlements prevent the WebView fro...
-
-📋 Last Analyzed Commit: eaa45707
-🎯 Charter Progress: 0/9 goals completed
+📋 Last Analyzed Commit: 025519cd
+🎯 Charter Progress: 0/8 goals completed
 
 👤 User Feedback: 4 dismissed, 14 false positives
 ============================================================
 
 📡 API: GET /state
-INFO:     127.0.0.1:61429 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61455 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51513 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61456 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51536 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:61455 - "GET /state HTTP/1.1" 200 OK
-Screen captured (333583 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_154322.png
+INFO:     127.0.0.1:51538 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:51536 - "GET /state HTTP/1.1" 200 OK
+Screen captured (248746 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_160345.png
 
 ============================================================
 👁️  SCREEN ANALYSIS - Proactive Assistance
 ============================================================
-🖼️  Analyzing screenshot (333583 bytes)...
+🖼️  Analyzing screenshot (248746 bytes)...
 📚 Using 14 false positive(s) + 4 dismissed pattern(s) as learning context
-📡 API: GET /state
-INFO:     127.0.0.1:61496 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61541 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61542 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61541 - "GET /state HTTP/1.1" 200 OK
-💡 POTENTIAL ISSUE DETECTED!
-------------------------------------------------------------
-Type: error
-Severity: High
-Description: Application fails to fetch critical checklist data and daemon state, reporting 'Daemon not running'. This indicates service connectivity issues, blocking core functionality.
-------------------------------------------------------------
-📡 API: GET /state
-INFO:     127.0.0.1:61565 - "GET /state HTTP/1.1" 200 OK
-✅ STRATEGIC ISSUE ADDED (Priority: 4/5)
-🚨 Total Active Issues: 3
-============================================================
-
-📡 API: GET /state
-INFO:     127.0.0.1:61593 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61594 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61593 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61616 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61642 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61643 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61642 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61665 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61689 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61690 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61690 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61733 - "GET /state HTTP/1.1" 200 OK
-Screen captured (305843 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_154405.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (305843 bytes)...
-📚 Using 14 false positive(s) + 4 dismissed pattern(s) as learning context
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61756 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61757 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61756 - "GET /state HTTP/1.1" 200 OK
-✅ No critical issues detected
-============================================================
-
-
-============================================================
-📊 CURRENT STATE SUMMARY
-============================================================
-🔐 Security Score: 60/100
-🚨 Active Issues: 3
-
-Top Issues (by priority):
-  1. [Critical] P5 - Proactive - error: A prominent '1 error' notification is visible, sug...
-  2. [High] P4 - Proactive - error: Missing Xcode entitlements prevent the WebView fro...
-  3. [High] P4 - Proactive - error: Application fails to fetch critical checklist data...
-
-📋 Last Analyzed Commit: eaa45707
-🎯 Charter Progress: 0/9 goals completed
-
-👤 User Feedback: 4 dismissed, 14 false positives
-============================================================
-
-📡 API: GET /state
-INFO:     127.0.0.1:61783 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61810 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61811 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61811 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61837 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61861 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61862 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61862 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61887 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61911 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61912 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61911 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /feedback - Action: false_positive on issue 0
-✓ Marked as false positive: A prominent '1 error' notification is visible, sug...
-INFO:     127.0.0.1:61911 - "POST /feedback HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61911 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /feedback - Action: false_positive on issue 0
-✓ Marked as false positive: Missing Xcode entitlements prevent the WebView fro...
-INFO:     127.0.0.1:61918 - "POST /feedback HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61918 - "GET /state HTTP/1.1" 200 OK
-Screen captured (309845 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_154441.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (309845 bytes)...
-📚 Using 16 false positive(s) + 4 dismissed pattern(s) as learning context
-📡 API: POST /feedback - Action: false_positive on issue 0
-✓ Marked as false positive: Application fails to fetch critical checklist data...
-INFO:     127.0.0.1:61918 - "POST /feedback HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61918 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61918 - "GET /state HTTP/1.1" 200 OK
-✅ No critical issues detected
-============================================================
-
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:61975 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61976 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61976 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:61999 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:62023 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:62024 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:62023 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:62065 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:62096 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:62098 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:62096 - "GET /state HTTP/1.1" 200 OK
-
-============================================================
-📊 CURRENT STATE SUMMARY
-============================================================
-🔐 Security Score: 100/100
-🚨 Active Issues: 0
-
-📋 Last Analyzed Commit: eaa45707
-🎯 Charter Progress: 0/9 goals completed
-
-👤 User Feedback: 4 dismissed, 17 false positives
-============================================================
-
-📡 API: GET /state
-INFO:     127.0.0.1:62123 - "GET /state HTTP/1.1" 200 OK
-Screen captured (301595 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_154519.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (301595 bytes)...
-📚 Using 17 false positive(s) + 4 dismissed pattern(s) as learning context
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:62150 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:62151 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:62151 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:62177 - "GET /state HTTP/1.1" 200 OK
 ✅ No critical issues detected
 ============================================================
 
 📡 API: GET /state
-INFO:     127.0.0.1:62203 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51622 - "GET /state HTTP/1.1" 200 OK
+📡 API: GET /state
+INFO:     127.0.0.1:51644 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:62204 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51644 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:62203 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51648 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:62242 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51648 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:62275 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51673 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:62276 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51674 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:62275 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51673 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:62301 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:62341 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51696 - "GET /state HTTP/1.1" 200 OK
 📡 API: POST /state/recalculate
-INFO:     127.0.0.1:62342 - "POST /state/recalculate HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51718 - "POST /state/recalculate HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:62341 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51719 - "GET /state HTTP/1.1" 200 OK
 📡 API: GET /state
-INFO:     127.0.0.1:62378 - "GET /state HTTP/1.1" 200 OK
-Screen captured (189760 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_154555.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (189760 bytes)...
-📚 Using 17 false positive(s) + 4 dismissed pattern(s) as learning context
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:62406 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:62407 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:62407 - "GET /state HTTP/1.1" 200 OK
-✅ No critical issues detected
-============================================================
-
-📡 API: GET /state
-INFO:     127.0.0.1:62436 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:62478 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:62479 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:62478 - "GET /state HTTP/1.1" 200 OK
-
-============================================================
-📊 CURRENT STATE SUMMARY
-============================================================
-🔐 Security Score: 100/100
-🚨 Active Issues: 0
-
-📋 Last Analyzed Commit: eaa45707
-🎯 Charter Progress: 0/9 goals completed
-
-👤 User Feedback: 4 dismissed, 17 false positives
-============================================================
-
-📡 API: GET /state
-INFO:     127.0.0.1:62506 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:62535 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:62536 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:62535 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:62562 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:62601 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:62602 - "GET /state HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:62601 - "GET /state HTTP/1.1" 200 OK
-Screen captured (201332 bytes) -> /tmp/vibe-assist-screenshots/screenshot_20251108_154631.png
-
-============================================================
-👁️  SCREEN ANALYSIS - Proactive Assistance
-============================================================
-🖼️  Analyzing screenshot (201332 bytes)...
-📚 Using 17 false positive(s) + 4 dismissed pattern(s) as learning context
-📡 API: GET /state
-INFO:     127.0.0.1:62638 - "GET /state HTTP/1.1" 200 OK
-✅ No critical issues detected
-============================================================
-
-📡 API: GET /state
-INFO:     127.0.0.1:62673 - "GET /state HTTP/1.1" 200 OK
-📡 API: POST /state/recalculate
-INFO:     127.0.0.1:62674 - "POST /state/recalculate HTTP/1.1" 200 OK
-📡 API: GET /state
-INFO:     127.0.0.1:62673 - "GET /state HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51719 - "GET /state HTTP/1.1" 200 OK

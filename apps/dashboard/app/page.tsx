@@ -174,7 +174,19 @@ export default function Home() {
       <main className={styles.main}>
         <div className={styles.header}>
           <h1 className={styles.title}>Vibe Assist</h1>
-          <p className={styles.subtitle}>Real-time Code Security Monitor</p>
+          <p className={styles.subtitle}>Your Context, Always in Sync</p>
+        </div>
+
+        {/* Status Banner */}
+        <div className={styles.statusBanner}>
+          <div className={styles.statusIcon}>✓</div>
+          <div className={styles.statusContent}>
+            <h3 className={styles.statusTitle}>Context is Up to Date</h3>
+            <p className={styles.statusDescription}>
+              Working across multiple contributors, LLMs, and IDEs? We've got you covered.
+              VibeAssist tracks your changes, organizes context, and identifies conflicts—so you can make informed decisions.
+            </p>
+          </div>
         </div>
 
         <div className={styles.dashboard}>
@@ -217,7 +229,7 @@ export default function Home() {
           {/* Issues List */}
           <div className={styles.issuesSection}>
             <div className={styles.issuesHeader}>
-              <h2>Active Issues</h2>
+              <h2>Potential Conflicts & Issues</h2>
               {state && state.active_issues.length > 0 && (
                 <button
                   className={styles.clearAllBtn}
@@ -231,7 +243,10 @@ export default function Home() {
             {state?.active_issues.length === 0 ? (
               <div className={styles.noIssues}>
                 <div className={styles.successIcon}>✓</div>
-                <p>No security issues detected</p>
+                <p>No conflicts or issues detected</p>
+                <p className={styles.valueMessage}>
+                  🎯 Your codebase context is clean and ready to share with any LLM or team member
+                </p>
               </div>
             ) : (
               <div className={styles.issuesList}>
@@ -282,14 +297,24 @@ export default function Home() {
             )}
           </div>
 
+          {/* Value Proposition Footer */}
+          <div className={styles.valueProposition}>
+            <h3>Why VibeAssist?</h3>
+            <p>
+              <strong>Lost context is the #1 pain point</strong> when coding with multiple contributors, LLMs, and IDEs.
+              VibeAssist reviews your changes and keeps everything organized in a centralized location,
+              so you can make informed decisions about how to continue—without constantly re-explaining yourself.
+            </p>
+          </div>
+
           <div className={styles.footer}>
             <div className={styles.autoRefresh}>
               <div className={styles.pulse}></div>
-              <span>Auto-refreshing every 5 seconds</span>
+              <span>Context synced • Auto-refreshing every 5s</span>
             </div>
             {state?.last_analyzed_commit && (
               <div className={styles.commitInfo}>
-                Last commit: {state.last_analyzed_commit.substring(0, 8)}
+                Last analyzed: {state.last_analyzed_commit.substring(0, 8)}
               </div>
             )}
           </div>

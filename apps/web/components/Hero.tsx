@@ -48,7 +48,7 @@ const Hero: React.FC = () => {
           transition={{ duration: 0.7, delay: 0.2 }}
         >
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-sky-300 to-purple-400 leading-tight">
-            Stop Debugging Your AI.<br/>Start Coding in Flow.
+            Never Lose Context Again.<br/>Keep Everyone in Sync.
           </h1>
         </motion.div>
         <motion.p
@@ -57,7 +57,7 @@ const Hero: React.FC = () => {
           transition={{ duration: 0.7, delay: 0.4 }}
           className="mt-6 max-w-2xl mx-auto text-lg text-gray-400"
         >
-          Vibe Assist is a proactive AI partner that lives in your menu bar. It aligns your code with your vision, providing the live context, security, and focus that other assistants lack.
+          Coding across multiple contributors, LLMs, and IDEs is chaos. <span className="text-emerald-300 font-semibold">Lost context</span> is the #1 pain point developers mention on Reddit. VibeAssist solves it by keeping your project context fresh, organized, and accessible—always.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}

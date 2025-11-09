@@ -19,27 +19,6 @@ if [ ! -d "node_modules" ]; then
     pnpm install
 fi
 
-# Setup Python virtual environment if it doesn't exist
-if [ ! -d "apps/daemon/venv" ]; then
-    echo "Creating Python virtual environment..."
-    cd apps/daemon
-    python3 -m venv venv
-    source venv/bin/activate
-    pip install -r requirements.txt
-    cd ../..
-fi
-
-# Start daemon in background
-echo "Starting daemon on http://localhost:8000..."
-cd apps/daemon
-source venv/bin/activate
-nohup python -m src.daemon /Users/andriikonovalenko/vibe-assist > ../../daemon.log 2>&1 &
-echo "Daemon started (logs: daemon.log)"
-cd ../..
-
-# Wait a moment for daemon to start
-sleep 2
-
 # Run the web app (landing page) and dashboard
 echo "Starting landing page on http://localhost:3000..."
 echo "Starting dashboard on http://localhost:3001..."

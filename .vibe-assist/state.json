@@ -1,81 +1,9 @@
 {
-  "security_score": 0,
+  "security_score": 90,
   "active_issues": [
     {
-      "type": "Proactive - error",
-      "description": "Critical import errors for standard libraries (io, json) and PIL.Image indicate a broken Python environment, blocking application execution.",
-      "severity": "High",
-      "priority_score": 4
-    },
-    {
-      "type": "Proactive - error",
-      "description": "Red underline in analysis.py line 65 suggests a syntax error or malformed statement, likely preventing compilation or runtime execution.",
-      "severity": "High",
-      "priority_score": 4
-    },
-    {
-      "type": "Proactive - error",
-      "description": "A Python daemon process is showing an error state (red exclamation mark), indicating potential broken background functionality that requires urgent investigation.",
-      "severity": "High",
-      "priority_score": 4
-    },
-    {
-      "type": "Proactive - architecture",
-      "description": "Next.js warns about an incorrectly inferred workspace root and detected multiple lockfiles. This indicates a potential architectural flaw in dependency management, risking inconsistent builds.",
-      "severity": "High",
-      "priority_score": 4
-    },
-    {
-      "type": "Proactive - bug",
-      "description": "The system fails to process historical commits for analysis, falling back to current HEAD. This compromises the completeness and accuracy of proactive screen analysis.",
-      "severity": "High",
-      "priority_score": 4
-    },
-    {
-      "type": "Proactive - error",
-      "description": "Git pull failed with 'fatal: Need to specify how to reconcile divergent branches', blocking repository updates and collaborative development.",
-      "severity": "High",
-      "priority_score": 4
-    },
-    {
       "type": "Proactive - security",
-      "description": "Terminal warning 'no sandbox' may indicate a critical security vulnerability or architectural flaw if application requires sandboxing for secure operations, especially with 'gemini' integration.",
-      "severity": "High",
-      "priority_score": 4
-    },
-    {
-      "type": "Proactive - error",
-      "description": "Multiple zsh and node processes are terminated (red 'X' icon). This suggests critical background services or development servers are crashing, potentially blocking work.",
-      "severity": "High",
-      "priority_score": 4
-    },
-    {
-      "type": "Proactive - bug",
-      "description": "Python runtime error 'AttributeError: module 'sys' has no attribute 'args'' indicates incorrect usage of sys.argv, actively preventing execution of `view_gemini_logs.py`.",
-      "severity": "High",
-      "priority_score": 4
-    },
-    {
-      "type": "Proactive - error",
-      "description": "The 'vite' command is not found, causing the 'pnpm run dev' command to fail. This urgently blocks local development and execution.",
-      "severity": "High",
-      "priority_score": 4
-    },
-    {
-      "type": "Proactive - error",
-      "description": "The application widget is not displaying the website despite successful dependency installation, indicating a functional or runtime error blocking execution.",
-      "severity": "High",
-      "priority_score": 4
-    },
-    {
-      "type": "Proactive - error",
-      "description": "The 'run.sh' script timed out after 10 minutes, indicating a critical failure in starting the application. This blocks development and prevents the web app from running.",
-      "severity": "High",
-      "priority_score": 4
-    },
-    {
-      "type": "Proactive - error",
-      "description": "The 'run failed: command exited (1)' error indicates a critical failure during the development build or execution, actively blocking the application from running. This needs immediate attention.",
+      "description": "Exposed API key (GEMINI_API_KEY) directly in analysis.py. This is a critical security vulnerability and should be moved to environment variables or a secure secret management system.",
       "severity": "High",
       "priority_score": 4
     }
@@ -83,7 +11,7 @@
   "project_charter": {
     "initialized": true,
     "project_name": "Vibe Assist",
-    "description": "A comprehensive code monitoring and security analysis tool that combines a Python AI backend (Daemon), a Next.js web application/API bridge, and a native macOS widget. It provides real-time security vulnerability detection, AI-powered commit analysis, and proactive coding suggestions by monitoring git repositories and screen activity. The system's proactive screen analysis has been simplified to provide a continuous stream of suggestions without deduplication. The system can also perform a one-time, lightweight analysis of a codebase to generate a baseline project context document, scanning all files except for a set of hardcoded common directories. The native macOS widget component has been simplified, removing decorative UI elements and auxiliary features like the menu bar launcher to focus on core data display. The system now also logs all interactions with the Gemini AI to a file intended for version control, providing a transparent audit trail of AI-driven analysis.",
+    "description": "A comprehensive code monitoring and security analysis tool that combines a Python AI backend (Daemon), a Next.js web application/API bridge, and a native macOS widget. The web application has been streamlined to function purely as a user-facing dashboard and an API endpoint for the widget, removing its previous role as a public marketing website. It provides real-time security vulnerability detection, AI-powered commit analysis, and proactive coding suggestions by monitoring git repositories and screen activity. The system's commit analysis functionality has been simplified to only process new commits that occur while the daemon is running, removing the capability to process a backlog of historical commits on startup. The system can also perform a one-time, lightweight analysis of a codebase to generate a baseline project context document, scanning all files except for a set of hardcoded common directories. The native macOS widget component has been simplified, removing decorative UI elements and auxiliary features like the menu bar launcher to focus on core data display.",
     "tech_stack": [
       "Python",
       "FastAPI",
@@ -98,13 +26,13 @@
     ],
     "key_directories": {
       "apps/daemon": "The core Python backend service responsible for all AI analysis, git monitoring, and screen capture.",
-      "apps/web": "The Next.js web application that serves as a dashboard and an API bridge between the Python daemon and the macOS widget.",
+      "apps/web": "The Next.js web application that serves as a dashboard and an API bridge between the Python daemon and the macOS widget. It has been refactored from a marketing landing page to a purely functional application.",
       "apps/widget": "The native macOS widget written in Swift, which displays the final analysis results.",
       "apps/docs": "A separate Next.js application for project documentation.",
       "packages/ui": "Shared React components used across the Next.js applications.",
       "packages/eslint-config": "Shared ESLint configurations for the monorepo.",
       "packages/typescript-config": "Shared TypeScript configurations for the monorepo.",
-      ".vibe-assist": "Stores project-specific data. It contains `context.md` (generated and typically ignored) and `gemini-logs.jsonl`, a version-controlled log of all interactions with the Gemini AI, used for auditing and debugging."
+      ".vibe-assist": "Stores project-specific data generated by the tool, such as the context.md file. It no longer uses a dedicated ignore file for configuring analysis scope. This directory should be excluded from version control."
     },
     "charter_items": [
       {
@@ -146,14 +74,9 @@
         "goal": "Perform a one-time, lightweight analysis of the codebase to generate a baseline project context document.",
         "completed": false,
         "completed_by_commit": ""
-      },
-      {
-        "goal": "Maintain a version-controlled log of all AI interactions for transparency and debugging.",
-        "completed": false,
-        "completed_by_commit": ""
       }
     ],
-    "architecture_overview": "Vibe Assist uses a three-tier architecture. The Python Daemon (`apps/daemon`) acts as the core intelligence, running a multi-threaded FastAPI server for git and screen monitoring. It communicates with the Google Gemini API for analysis. A key feature is the on-demand context initialization via an API endpoint, which has been simplified to scan the entire project excluding a predefined set of common directories, removing the need for a user-configured ignore file. The middle tier, a Next.js application (`apps/web`), provides a web dashboard and an API bridge (`/api/checklist`) for the top tier\u2014the native macOS Widget (`apps/widget`). The overall state management model has been simplified, with the removal of issue management endpoints and the elimination of duplicate-checking for proactive screen analysis, resulting in a more direct 'append-only' stream of AI-generated suggestions. Additionally, all calls to the Gemini API are logged to a version-controlled file (`.vibe-assist/gemini-logs.jsonl`) to ensure a persistent and auditable record of AI interactions.",
+    "architecture_overview": "Vibe Assist uses a three-tier architecture. The Python Daemon (`apps/daemon`) acts as the core intelligence, running a multi-threaded FastAPI server for git and screen monitoring. The git watcher thread has been simplified to monitor for changes from the current repository HEAD, removing the logic to process historical commits that occurred while the daemon was offline. A key feature is the on-demand context initialization via an API endpoint, which scans the entire project excluding a predefined set of common directories. The middle tier, a Next.js application (`apps/web`), provides a web dashboard and an API bridge (`/api/checklist`) for the top tier\u2014the native macOS Widget (`apps/widget`). This web application has been refactored to focus exclusively on this functional role, with all marketing and landing page components removed. The overall state management is intentionally ephemeral, with the removal of issue management endpoints and duplicate-checking, resulting in a direct 'append-only' stream of AI-generated suggestions. The previous feature of logging AI interactions has been removed to simplify the system.",
     "api_endpoints": [
       {
         "path": "/api/checklist",
@@ -195,27 +118,27 @@
       {
         "name": "analyze_fast_path",
         "location": "apps/daemon/src/analysis.py",
-        "purpose": "Performs rapid security analysis on uncommitted git diffs. No longer uses a strict JSON schema for the response. All AI interactions are logged."
+        "purpose": "Performs rapid security analysis on uncommitted git diffs. No longer uses a strict JSON schema for the response."
       },
       {
         "name": "analyze_deep_path",
         "location": "apps/daemon/src/analysis.py",
-        "purpose": "Performs a simplified analysis of a new git commit to check its alignment with the project charter, but no longer updates the charter itself. All AI interactions are logged."
+        "purpose": "Performs a simplified analysis of a new git commit to check its alignment with the project charter, but no longer updates the charter itself."
       },
       {
         "name": "analyze_screen_proactively",
         "location": "apps/daemon/src/analysis.py",
-        "purpose": "Analyzes a screenshot of the developer's screen using a simplified AI prompt to identify potential coding improvements. It adds all found suggestions to the active issues list without checking for duplicates. All AI interactions are logged."
+        "purpose": "Analyzes a screenshot of the developer's screen using a simplified AI prompt to identify potential coding improvements. It adds all found suggestions to the active issues list without checking for duplicates."
       },
       {
         "name": "initialize_project_context",
         "location": "apps/daemon/src/analysis.py",
-        "purpose": "Performs a one-time, lightweight scan of the codebase to generate an initial project charter and a `context.md` file. It no longer respects a user-defined ignore file, instead using a hardcoded list of common directories to exclude. All AI interactions during this process are logged."
+        "purpose": "Performs a one-time, lightweight scan of the codebase to generate an initial project charter and a `context.md` file. It no longer respects a user-defined ignore file, instead using a hardcoded list of common directories to exclude."
       },
       {
         "name": "start (watcher)",
         "location": "apps/daemon/src/watcher.py",
-        "purpose": "The main loop in the watcher thread. It continuously checks for uncommitted changes and new commits in the target git repository."
+        "purpose": "The main loop in the watcher thread. It starts monitoring from the current repository HEAD and continuously checks for new commits and uncommitted changes. It no longer processes historical commits that occurred while the daemon was offline."
       },
       {
         "name": "start (screen)",
@@ -245,7 +168,7 @@
         "from_component": "Watcher Thread (Daemon)",
         "to_component": "Analysis Module (Daemon)",
         "interaction_type": "Function Call",
-        "description": "The watcher thread detects git changes and calls `analysis.analyze_fast_path()` or `analysis.analyze_deep_path()` with the diff content."
+        "description": "The watcher thread detects new commits and uncommitted changes as they occur and calls `analysis.analyze_fast_path()` or `analysis.analyze_deep_path()`. It no longer scans for and processes a backlog of commits upon startup."
       },
       {
         "from_component": "Screen Thread (Daemon)",
@@ -257,7 +180,7 @@
         "from_component": "Analysis Module (Daemon)",
         "to_component": "Google Gemini API",
         "interaction_type": "External API Call",
-        "description": "All analysis functions within the `analysis` module make authenticated requests to the Google Gemini AI API to generate insights. The requests and responses are logged to `.vibe-assist/gemini-logs.jsonl`."
+        "description": "All analysis functions within the `analysis` module make authenticated requests to the Google Gemini AI API to generate insights."
       },
       {
         "from_component": "Analysis Module (Daemon)",
@@ -269,18 +192,16 @@
     "coding_patterns": [
       "Monorepo with Shared Packages: Uses Turborepo and pnpm workspaces to manage multiple applications and share code (UI components, configs).",
       "Multi-threaded Background Tasks: The Python daemon uses threading to run concurrent, non-blocking tasks for git watching and screen analysis.",
-      "In-Memory State Management with Thread Lock: A global dictionary serves as the single source of truth, with a `threading.Lock` to ensure thread-safe updates. Proactive suggestions are appended directly without deduplication, and state is not persisted to disk.",
+      "In-Memory State Management with Thread Lock: A global dictionary serves as the single source of truth, with a `threading.Lock` to ensure thread-safe updates. The system avoids reliance on persistent state for core monitoring loops, such as tracking the last analyzed commit across restarts.",
       "API Gateway / Bridge Pattern: The Next.js app acts as a bridge, providing a stable, simplified API for the widget while abstracting the more complex backend daemon.",
       "Simplified AI Interaction without Strict Schemas: Relies on general text or simple JSON responses from the AI model, removing the overhead of strict schema validation frameworks like Pydantic.",
-      "Environment-based Configuration: Configuration is managed through environment variables (`.env` files) for secrets and runtime parameters. File-based configuration (like the previous `.vibe-assist.ignore`) has been removed in favor of hardcoded logic for simplicity.",
+      "Environment-based Configuration: Configuration is managed through environment variables (`.env` files) for secrets and runtime parameters. File-based configuration has been removed in favor of hardcoded logic for simplicity.",
       "Graceful Fallback: The Next.js API provides a fallback response when the backend daemon is unavailable, ensuring the widget displays a helpful message instead of failing.",
-      "Version-Controlled AI Auditing: All interactions with the external AI service are logged to a JSONL file that is committed to the repository, providing a transparent and auditable history of AI activity.",
-      "Hybrid Artifact Management: The `.vibe-assist` directory houses both version-controlled artifacts (like `gemini-logs.jsonl` for auditing) and generated, ignored artifacts (like `context.md`), separating them from primary source code.",
-      "Security Hardening via Code Removal: Intentionally vulnerable code used for testing has been removed from the codebase, and the API surface has been minimized by removing non-essential endpoints to reduce attack vectors."
+      "Separation of Source Code and Generated Artifacts: Generated artifacts like `context.md` are stored in the `.vibe-assist` directory, which is intended to be excluded from version control, separating them from the source code."
     ],
-    "development_setup": "The project is a monorepo managed by pnpm and Turborepo. To set up, run `pnpm install` in the root. For the Python daemon in `apps/daemon`, create and activate a virtual environment, then run `pip install -r requirements.txt`. An essential `GEMINI_API_KEY` environment variable must be set. The `.vibe-assist/` directory is used for generated files; ensure `context.md` is in your project's `.gitignore` but that `gemini-logs.jsonl` is tracked by version control. Start the system with the Python daemon (`python -m src.daemon /path/to/project`) and the Next.js app (`pnpm dev`). The web app runs on port 3000, the daemon on port 8000. To initialize the project context for the first time, send a POST request to `http://localhost:8000/context/initialize`."
+    "development_setup": "The project is a monorepo managed by pnpm and Turborepo. To set up, run `pnpm install` in the root. For the Python daemon in `apps/daemon`, create and activate a virtual environment, then run `pip install -r requirements.txt`. An essential `GEMINI_API_KEY` environment variable must be set. It is recommended to add the `.vibe-assist/` directory to the project's `.gitignore` file. Start the system with the Python daemon (`python -m src.daemon /path/to/project`) and the Next.js app (`pnpm dev`). The web app runs on port 3000, the daemon on port 8000. To initialize the project context for the first time, send a POST request to `http://localhost:8000/context/initialize`."
   },
-  "last_analyzed_commit": "f41984927b64d4ee5a3849ad177e466b2af20dc0",
+  "last_analyzed_commit": "025519cdcbc010b14cd6c5409245cdfbd204b112",
   "user_feedback": {
     "dismissed_issues": [
       {
@@ -306,8 +227,89 @@
         "type": "Proactive - refactoring",
         "dismissed_at": 1762640530.37838,
         "note": "Not important"
+      },
+      {
+        "description": "Red underline in analysis.py line 65 suggests a syntax error or malformed statement, likely preventing compilation or runtime execution.",
+        "type": "Proactive - error",
+        "dismissed_at": 1762647199.716937,
+        "note": ""
+      },
+      {
+        "description": "A Python daemon process is showing an error state (red exclamation mark), indicating potential broken background functionality that requires urgent investigation.",
+        "type": "Proactive - error",
+        "dismissed_at": 1762647200.108225,
+        "note": ""
+      },
+      {
+        "description": "The system fails to process historical commits for analysis, falling back to current HEAD. This compromises the completeness and accuracy of proactive screen analysis.",
+        "type": "Proactive - bug",
+        "dismissed_at": 1762647200.986092,
+        "note": ""
+      },
+      {
+        "description": "Git pull failed with 'fatal: Need to specify how to reconcile divergent branches', blocking repository updates and collaborative development.",
+        "type": "Proactive - error",
+        "dismissed_at": 1762647201.354413,
+        "note": ""
+      },
+      {
+        "description": "Multiple zsh and node processes are terminated (red 'X' icon). This suggests critical background services or development servers are crashing, potentially blocking work.",
+        "type": "Proactive - error",
+        "dismissed_at": 1762647201.7415848,
+        "note": ""
+      },
+      {
+        "description": "Python runtime error 'AttributeError: module 'sys' has no attribute 'args'' indicates incorrect usage of sys.argv, actively preventing execution of `view_gemini_logs.py`.",
+        "type": "Proactive - bug",
+        "dismissed_at": 1762647201.919122,
+        "note": ""
+      },
+      {
+        "description": "The 'vite' command is not found, causing the 'pnpm run dev' command to fail. This urgently blocks local development and execution.",
+        "type": "Proactive - error",
+        "dismissed_at": 1762647202.355656,
+        "note": ""
+      },
+      {
+        "description": "The application widget is not displaying the website despite successful dependency installation, indicating a functional or runtime error blocking execution.",
+        "type": "Proactive - error",
+        "dismissed_at": 1762647203.0072472,
+        "note": ""
+      },
+      {
+        "description": "The 'run.sh' script timed out after 10 minutes, indicating a critical failure in starting the application. This blocks development and prevents the web app from running.",
+        "type": "Proactive - error",
+        "dismissed_at": 1762647203.1746209,
+        "note": ""
+      },
+      {
+        "description": "The notification badge indicates 1 new notification, but the content area only displays placeholders. This suggests a critical bug preventing users from viewing notifications.",
+        "type": "Proactive - bug",
+        "dismissed_at": 1762648502.9180238,
+        "note": ""
+      },
+      {
+        "description": "The 'claude-code' auto-update failed. This critical failure can block development and indicates environment issues, requiring immediate resolution.",
+        "type": "Proactive - error",
+        "dismissed_at": 1762648503.955007,
+        "note": ""
       }
     ],
-    "false_positives": []
+    "false_positives": [
+      {
+        "description": "Critical import errors for standard libraries (io, json) and PIL.Image indicate a broken Python environment, blocking application execution.",
+        "type": "Proactive - error",
+        "severity": "High",
+        "marked_at": 1762647203.3266292,
+        "note": ""
+      },
+      {
+        "description": "The 'run failed: command exited (1)' error indicates a critical failure during the development build or execution, actively blocking the application from running. This needs immediate attention.",
+        "type": "Proactive - error",
+        "severity": "High",
+        "marked_at": 1762647204.2887459,
+        "note": ""
+      }
+    ]
   }
 }

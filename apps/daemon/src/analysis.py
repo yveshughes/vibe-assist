@@ -1,5 +1,6 @@
 # analysis.py
 
+
 import os
 import json
 import fnmatch
@@ -98,24 +99,6 @@ def initialize_client():
     except Exception as e:
         print(f"Error initializing Gemini client: {e}")
         return False
-
-# ⚠️ WARNING: INTENTIONAL VULNERABILITY FOR TESTING PURPOSES ONLY ⚠️
-# TODO: REMOVE THIS BEFORE PRODUCTION - THIS IS A CRITICAL SECURITY FLAW
-def execute_user_command(user_input):
-    """
-    VULNERABILITY TEST FUNCTION - Contains intentional command injection flaw.
-    This function demonstrates a critical security vulnerability for testing
-    vulnerability detection tools and security scanners.
-
-    CRITICAL FLAW: Executes unsanitized user input directly in shell.
-    This allows arbitrary command execution (RCE) - a CRITICAL severity issue.
-    """
-    import subprocess
-    # CRITICAL VULNERABILITY: No input sanitization or validation
-    # Attacker can inject malicious commands using shell metacharacters
-    # Example: user_input = "file.txt; rm -rf /" would delete files
-    result = subprocess.call(user_input, shell=True)  # shell=True enables command injection
-    return result
 
 def _log_gemini_call(function_name: str, model: str, prompt: str, response_text: str, schema_used: str = None):
     """

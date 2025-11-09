@@ -94,6 +94,7 @@ async def clear_issues():
         state['active_issues'] = []
         # Reset security score
         state['security_score'] = 100
+        _save_state_unlocked()
     return {"message": f"Cleared {count} issues", "remaining_issues": 0}
 
 @app.post("/state/recalculate")
@@ -119,6 +120,7 @@ async def recalculate_security_score():
 
         # Ensure score doesn't go below 0
         state['security_score'] = max(0, base_score)
+        _save_state_unlocked()
 
         return {
             "message": "Security score recalculated",
@@ -133,6 +135,7 @@ async def delete_issue(index: int):
     with state_lock:
         if 0 <= index < len(state['active_issues']):
             removed = state['active_issues'].pop(index)
+            _save_state_unlocked()
             return {"message": "Issue removed", "removed": removed}
         else:
             return {"error": "Invalid issue index"}, 404
@@ -141,6 +144,19 @@ class FeedbackRequest(BaseModel):
     issue_index: int
     action: str  # "dismiss", "false_positive", "resolve"
     note: str = ""  # Optional user note
+
+def _save_state_unlocked():
+    """Save state to disk. Caller must hold state_lock."""
+    if not STATE_FILE_PATH:
+        print("⚠️  Cannot save state: STATE_FILE_PATH not set")
+        return
+
+    try:
+        with open(STATE_FILE_PATH, 'w') as f:
+            json.dump(state, f, indent=2)
+        print(f"✅ State saved to {STATE_FILE_PATH}")
+    except Exception as e:
+        print(f"❌ Error saving state: {e}")
 
 @app.post("/feedback")
 async def submit_feedback(feedback: FeedbackRequest):
@@ -163,6 +179,7 @@ async def submit_feedback(feedback: FeedbackRequest):
             })
             state['active_issues'].pop(feedback.issue_index)
             print(f"✓ Issue dismissed: {issue.get('description', '')[:50]}...")
+            _save_state_unlocked()
             return {"message": "Issue dismissed", "remaining_issues": len(state['active_issues'])}
 
         elif feedback.action == "false_positive":
@@ -176,12 +193,14 @@ async def submit_feedback(feedback: FeedbackRequest):
             })
             state['active_issues'].pop(feedback.issue_index)
             print(f"✓ Marked as false positive: {issue.get('description', '')[:50]}...")
+            _save_state_unlocked()
             return {"message": "Marked as false positive", "remaining_issues": len(state['active_issues'])}
 
         elif feedback.action == "resolve":
             # Simply remove from active issues (considered resolved)
             state['active_issues'].pop(feedback.issue_index)
             print(f"✓ Issue resolved: {issue.get('description', '')[:50]}...")
+            _save_state_unlocked()
             return {"message": "Issue resolved", "remaining_issues": len(state['active_issues'])}
 
         else:

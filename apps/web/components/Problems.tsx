@@ -9,9 +9,9 @@ import { VisionAnimation } from './animations/VisionAnimation';
 const problemsData = [
     {
         icon: <ContextAnimation />,
-        title: 'Context is Constantly Stale',
-        description: 'AI assistants rely on outdated indexes of your code, providing suggestions that are irrelevant or, worse, subtly wrong. Keeping context fresh across a team is a continuous, manual struggle.',
-        solution: 'VibeAssist provides live context from your local environment—including git diffs, open tabs, and even on-screen text—ensuring every AI interaction is perfectly informed.'
+        title: 'Lost Context = Lost Productivity',
+        description: 'Working across multiple contributors, LLMs, and IDEs? Your context gets fragmented. AI assistants give outdated suggestions. Your team loses track of what changed. You waste hours re-explaining the same thing to different tools and teammates.',
+        solution: 'VibeAssist reviews every change you make and organizes it in a centralized location. See what\'s changed, identify conflicts, and share up-to-date context with your entire team and all your AI tools—instantly.'
     },
     {
         icon: <VisionAnimation />,
