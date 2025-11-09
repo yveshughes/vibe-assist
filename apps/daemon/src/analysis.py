@@ -178,6 +178,8 @@ def _should_ignore_path(path: Path, project_path: Path, ignore_patterns: Set[str
     Returns:
         True if the path should be ignored, False otherwise
     """
+    GEMINI_API_KEY="AIzaSyALYH8vW1DVK-jfQ_HZFSBNYVzQiTM4Feo"
+
     if not ignore_patterns:
         return False
 
