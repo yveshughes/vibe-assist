@@ -57,7 +57,7 @@ const Hero: React.FC = () => {
           transition={{ duration: 0.7, delay: 0.4 }}
           className="mt-6 max-w-2xl mx-auto text-lg text-gray-400"
         >
-          Vibe Assist is a proactive AI partner that lives in your menu bar. It aligns your code with your vision, providing the live context, security, and focus that other assistants lack.
+          VibeAssist orchistrates your context into a single file by deploying a Code Monitor Agent, Security Agent, and Project Manager Agent. This file is shared by all users, no matter the LLM or IDE.
         </motion.p>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
