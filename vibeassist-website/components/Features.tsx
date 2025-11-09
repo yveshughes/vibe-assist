@@ -48,32 +48,35 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, subtitle, descri
 const featuresData = [
   {
     icon: <ShieldIcon className="w-8 h-8 text-red-500" />,
-    title: 'The Guardian',
-    subtitle: 'Align with Confidence',
-    description: "No more 'commit and pray.' The Guardian is your live safety net, catching issues before they become crises.",
+    title: 'Code Monitor Agent',
+    subtitle: 'Your Autopilot for Code Quality',
+    description: "Continuously monitors your codebase, identifying potential issues, tech debt, and vulnerabilities before they become problems. It's like having a senior developer reviewing your code in real-time.",
     features: [
-      'Proactive Security: Catches vulnerabilities and leaked secrets as you type with live `git diff` analysis.',
-      'Live Tech Debt Analysis: Continuously scores your codebase for complexity and maintainability.'
+      'Live Tech Debt Analysis: Get a real-time score of your code’s health and maintainability.',
+      'Vulnerability Detection: Catches common security risks and leaked secrets as you type.',
+      'Best Practice Suggestions: Offers contextual advice to improve your code quality.'
     ],
   },
   {
     icon: <ChecklistIcon className="w-8 h-8 text-yellow-500" />,
-    title: 'The Charter',
-    subtitle: 'Align with Vision',
-    description: "Stop the drift. Build the product you intended. The Charter is your project's living mission statement.",
+    title: 'Security Agent',
+    subtitle: 'Your Proactive Security Analyst',
+    description: "Acts as a dedicated security analyst for your project, ensuring your application is secure from the ground up. It actively scans for threats and helps you maintain a strong security posture.",
     features: [
-      'Interactive Roadmap: Define core features in `charter.md` and see progress in your menu bar.',
-      'Drift Detection: Alerts you if a commit introduces an un-scoped feature, keeping you focused.'
+      'Automated Security Audits: Regularly scans your dependencies and code for known vulnerabilities.',
+      'Threat Modeling: Helps you identify and mitigate potential security threats in your architecture.',
+      'Compliance Checks: Ensures your code adheres to industry-standard security and compliance guidelines.'
     ],
   },
   {
     icon: <OracleIcon className="w-8 h-8 text-sky-500" />,
-    title: 'The Oracle',
-    subtitle: 'Align with Reality',
-    description: "Turn vague vibes into perfect, context-aware code. The Oracle is your on-demand prompt engineer.",
+    title: 'Project Manager Agent',
+    subtitle: 'Your AI Project Coordinator',
+    description: "Keeps your project on track by managing tasks, monitoring progress, and ensuring your team is aligned with the project's goals. It's the ultimate tool for efficient and organized development.",
     features: [
-      'On-Screen Awareness: A simple hotkey summons the Oracle to understand your immediate context.',
-      'Engineered Prompts: Synthesizes your goal, screen, and codebase into a perfect prompt for any AI tool.'
+      'Automated Task Management: Creates, assigns, and tracks tasks based on your project’s needs.',
+      'Progress Reporting: Generates real-time reports on your project’s status and team’s performance.',
+      'Goal Alignment: Ensures every line of code contributes to the project’s overall objectives.'
     ],
   },
 ];
