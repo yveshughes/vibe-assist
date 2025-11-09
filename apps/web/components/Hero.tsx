@@ -48,7 +48,7 @@ const Hero: React.FC = () => {
           transition={{ duration: 0.7, delay: 0.2 }}
         >
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-sky-300 to-purple-400 leading-tight">
-            Stop Debugging Your AI.<br/>Start Coding in Flow.
+            Context is all you need
           </h1>
         </motion.div>
         <motion.p
